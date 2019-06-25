@@ -4,7 +4,7 @@ Node::Node(void)
 {
 	frequency = 0;
 }
-Node* Node::ArrayOfJoints(Node *Num)
+Node* Node::ArrayOfJoints(Node **Num)
 {
 	for (int i = 0; i <= Node::NodeCount; i++)
 	{
@@ -17,7 +17,7 @@ Node* Node::ArrayOfJoints(Node *Num)
 	{
 		if (IsJoint(Num[i]))
 		{
-			jointnum[jointcount] = Num[i];
+			jointnum[jointcount] = *Num[i];
 			jointcount++;
 		}
 	}
@@ -31,9 +31,9 @@ std::set<int>& Node::GetConnection()
 }
 
 
-bool Node::IsJoint(Node j)
+bool Node::IsJoint(Node *j)
 {
-	if(j.frequency > 2)
+	if(j->frequency > 2)
 		return true;
 	return false;
 }

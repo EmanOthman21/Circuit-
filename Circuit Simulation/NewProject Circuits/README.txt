@@ -32,19 +32,19 @@ Note :
 -In the voltage source the postive side is node2
 
 The dependent Sources is written at form of:
--ICCS: Voltage controlled current source
+-VCCS: Voltage controlled current source
 -VCVS: Voltage controlled voltage source
--ICIS: Current controlled current source
--VCCS: Current controlled voltage source
+-CCCS: Current controlled current source
+-CCVS: Current controlled voltage source
 
 VCCS node1 node2 coefficient node3 node4
 when node3 is the first node of the controlled voltage
 node4 is the second node of the controlled  voltage
 
-ICCS 1 2 2 4 5
-VCVS 1 2 2 4 5
-ICIS 1 2 2 4 5
 VCCS 1 2 2 4 5
+VCVS 1 2 2 4 5
+CCCS 1 2 2 4 5
+CCVS 1 2 2 4 5
 
 
 -The results of the nodes voltage and the current will be printed at form of :

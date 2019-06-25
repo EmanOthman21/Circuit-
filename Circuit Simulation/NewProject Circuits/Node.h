@@ -13,7 +13,7 @@ class Node
 public:
 	Node(void);
 	~Node(void);
-	bool IsJoint(Node);
+	bool IsJoint(Node*);
 	void SetName(int);
 	void SetVoltage(complex <float>);
 	complex <float> GetVoltage();
@@ -23,7 +23,7 @@ public:
 	std::set<int>& GetConnection();
 	void Connect (int);
 	void IncrementFrequency();
-	Node* ArrayOfJoints(Node *);
+	Node* ArrayOfJoints(Node **);
 };
 
 

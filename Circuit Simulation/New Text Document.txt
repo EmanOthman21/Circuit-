@@ -1,0 +1,232 @@
+	bool flag=0;
+	for (int i = 0; i < VCCounter; i++)
+	{
+
+	
+	if(FactorIV[i]!=complex<float>(0,0))
+	{
+		flag=true;
+		if(K!=0)
+		{
+			if(M!=0)
+		mb(K-1,M-1)-=FactorIV[i];
+			if(N!=0)
+		mb(K-1,N-1)+=FactorIV[i];
+		}
+		if(L!=0)
+		{
+			if(M!=0)
+		mb(L-1,M-1)-=FactorIV[i];
+			if(N!=0)
+		mb(L-1,N-1)+=FactorIV[i];
+		}
+	}
+	}
+	for (int i = 0; i < IICounter; i++)
+	{
+
+	
+		if(FactorII[i]!=complex<float>(0,0))
+		{
+
+		flag=true;
+			Temp=Element[i].ElementBetweenNodes(M,N,index,Element);
+			for (int j = 0; j < index; j++)
+			{
+				if(Temp[j]->IsResistance()||Temp[j]->IsCapacitor()||Temp[j]->IsInductor())
+				{
+					if(K!=0)
+				{
+					if(M!=0)
+					mb(K-1,M-1)+=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+					if(N!=0)
+					mb(K-1,N-1)-=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+				}
+				if(L!=0)
+				{
+					if(M!=0)	
+					mb(L-1,M-1)-=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+					if(N!=0)
+					mb(L-1,N-1)+=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+				}
+				}
+			}
+		}
+	}
+
+	if(CircuitElement::NumDep == 0)
+	XD= mb.inverse()*Q;
+	else
+	if (Factor !=complex<float>(0,0))
+	{
+	  MatrixXcd mb2(AMatrixSize+1,AMatrixSize+1);
+	  for (int i =0;i<AMatrixSize+1;i++)
+	  {
+		  mb2(i,AMatrixSize)=complex<float>(0,0);
+	  }
+	  for (int i =0;i<AMatrixSize+1;i++)
+	  {
+		  mb2(AMatrixSize,i)=complex<float>(0,0);
+	  }
+     for (int i = 0; i < AMatrixSize; i++)
+		{
+			for (int j = 0; j < AMatrixSize; j++)
+			{
+				mb2(i,j) = A[i][j];
+			}
+
+		}
+	  if(L!=0)
+	   { 
+	   mb2(L-1,AMatrixSize)=complex <float >(1,0);
+       mb2(AMatrixSize,L-1)=complex <float> (1,0);
+		}
+	 if(K!=0)
+		 {
+	 	 mb2(K-1,AMatrixSize)=complex <float> (-1,0);
+	     mb2(AMatrixSize,K-1)=complex <float>(-1,0);
+		 }
+	 if(M!=0)
+	     mb2(AMatrixSize,M-1)=complex <float>(-1,0)*Factor;
+	 if(N!=0)
+	     mb2(AMatrixSize,N-1)=Factor;
+      MatrixXcd S(ZMatrixSize+1,1);
+	  for (int C=0;C<Node::NodeCount;C++)
+	{
+		S(C,0)=I[C];
+	}
+
+   int m=0;
+	for (int l=Node::NodeCount;l< ZMatrixSize;l++)
+	{ 
+   	S(l,0)=E[m];
+      m++;	
+	}
+	S(ZMatrixSize,0)=complex<float>(0,0);
+
+	MatrixXcd XD1(XMatrixSize+1,1);
+	for (int i = 0; i < XMatrixSize+1; i++)
+	{
+		XD1(i,0)=0;
+	}
+	 
+	//result matrix
+	  XD1= mb2.inverse()*S;
+	  for (int i=1;i<=Node::NodeCount;i++)
+	{
+	Nodes[i].SetVoltage(XD1(i-1,0));
+	}
+	Nodes[0].SetVoltage(complex <float>(0,0));
+    int o=Node::NodeCount;
+	for (int i=0;i<CircuitElement::TempCounter;i++)
+	{
+		
+			if(Element[i].IsVoltageSource())
+				{
+					Element[i].SetCurrent((XD1(o-1,0))*complex <double>(-1.0));
+		         	o++;
+			    }
+	}
+	
+
+	for (int i=0;i<CircuitElement::TempCounter;i++)
+	{
+      if(Element[i].IsDepSource())
+				{
+					Element[i].SetCurrent((XD1(o-1,0))*complex <double>(-1.0));
+		         	o++;
+			    }
+	}
+
+	for (int i=0;i<CircuitElement::TempCounter;i++)
+	{
+		if(Element[i].IsResistance()||Element[i].IsCapacitor()||Element[i].IsInductor())
+		{
+		
+			Element[i].SetCurrent(complex <float >(1,0)*(((Element[i].GetNode2())->GetVoltage())-((Element[i].GetNode1())->GetVoltage()))/Element[i].GetValue());
+		
+		}
+		
+	}
+	}
+
+	
+		else 
+	{
+
+	XD= mb.inverse()*Q;
+	}
+	
+					mb(K-1,M-1)+=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+					if(N!=0)
+					mb(K-1,N-1)-=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+				}
+				if(L!=0)
+				{
+					if(M!=0)	
+					mb(L-1,M-1)-=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+					if(N!=0)
+					mb(L-1,N-1)+=FactorII[i]*complex<float>(1,0)/Temp[j]->GetValue();
+				}
+				}
+			}
+		}
+	}
+
+	if(CircuitElement::NumDep == 0)
+	XD= mb.inverse()*Q;
+	else
+	if (Factor !=complex<float>(0,0))
+	{
+	  MatrixXcd mb2(AMatrixSize+1,AMatrixSize+1);
+	  for (int i =0;i<AMatrixSize+1;i++)
+	  {
+		  mb2(i,AMatrixSize)=complex<float>(0,0);
+	  }
+	  for (int i =0;i<AMatrixSize+1;i++)
+	  {
+		  mb2(AMatrixSize,i)=complex<float>(0,0);
+	  }
+     for (int i = 0; i < AMatrixSize; i++)
+		{
+			for (int j = 0; j < AMatrixSize; j++)
+			{
+				mb2(i,j) = A[i][j];
+			}
+
+		}
+	  if(L!=0)
+	   { 
+	   mb2(L-1,AMatrixSize)=complex <float >(1,0);
+       mb2(AMatrixSize,L-1)=complex <float> (1,0);
+		}
+	 if(K!=0)
+		 {
+	 	 mb2(K-1,AMatrixSize)=complex <float> (-1,0);
+	     mb2(AMatrixSize,K-1)=complex <float>(-1,0);
+		 }
+	 if(M!=0)
+	     mb2(AMatrixSize,M-1)=complex <float>(-1,0)*Factor;
+	 if(N!=0)
+	     mb2(AMatrixSize,N-1)=Factor;
+      MatrixXcd S(ZMatrixSize+1,1);
+	  for (int C=0;C<Node::NodeCount;C++)
+	{
+		S(C,0)=I[C];
+	}
+
+   int m=0;
+	for (int l=Node::NodeCount;l< ZMatrixSize;l++)
+	{ 
+   	S(l,0)=E[m];
+      m++;	
+	}
+	S(ZMatrixSize,0)=complex<float>(0,0);
+
+	MatrixXcd XD1(XMatrixSize+1,1);
+	for (int i = 0; i < XMatrixSize+1; i++)
+	{
+		XD1(i,0)=0;
+	}
+	 
+	//result matrix
