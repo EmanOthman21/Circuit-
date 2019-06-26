@@ -355,6 +355,8 @@ int main()
 	int XMatrixSize=vsindex+Node::NodeCount-1;
 	MatrixXcd Output(XMatrixSize,1);
 	MatrixXcd A2 (AMatrixSize+1, AMatrixSize+1);
+	MatrixXcd A3 (AMatrixSize+2, AMatrixSize+2);
+	MatrixXcd Q3 (AMatrixSize+2, 1);
 	bool DO = false;
 	for (int i = 0; i < XMatrixSize; i++)
 	{
@@ -369,7 +371,7 @@ int main()
 			ElementName = Element[i]->GetElementName();
 			if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='C'||ElementName[2]=='c'))
 			{
-						 for (int i = 0; i < AMatrixSize; i++)
+		 for (int i = 0; i < AMatrixSize; i++)
 		 {
 			 for (int j = 0; j < AMatrixSize; j++)
 			 {
@@ -434,12 +436,78 @@ int main()
 						A2(AMatrixSize,N1-1)-=complex<float>(1,0);
 						
 					}
-			
-	
-			}		
 				DO = true;
-				
-			
+	
+			}
+				else if(Temp[0]->IsCurrentSource())
+				{
+					if(N2 == 0)
+					{
+					Q(N1-1,0)-=Temp[0]->GetValue();
+					}
+					else if(N1 == 0)
+					{
+					Q(N2-1,0)+=Temp[0]->GetValue();
+					}
+					else
+					{
+					Q(N2-1,0)+=Temp[0]->GetValue();
+					Q(N1-1,0)-=Temp[0]->GetValue();
+					}
+				DO = true;
+
+				}
+				else
+				{
+					 
+
+					for (int i = 0; i < AMatrixSize; i++)
+					{
+						for (int j = 0; j < AMatrixSize; j++)
+						{
+							A3(i,j) = A(i,j);
+						}
+					 
+					}
+		 
+					for (int i = 0; i < AMatrixSize+2; i++)
+					{
+						Q3(i,0) = 0;
+						A3(AMatrixSize,i) = 0;
+						A3(AMatrixSize+1,i) = 0;
+						A3(i,AMatrixSize+1) = 0;
+						A3(i,AMatrixSize) = 0;
+					}
+					for (int i = 0; i < AMatrixSize; i++)
+					{
+						Q3(i,0) = Q(i,0);
+					}
+
+					A3(AMatrixSize+1,AMatrixSize+1) = complex<float>(-1,0);
+					if(N2 == 0)
+					{
+					A3(AMatrixSize+1,N1-1) = complex<float>(-1,0)/Element[i]->GetFactor();
+					A3(N1-1,AMatrixSize) = complex<float>(-1,0);
+					A3(AMatrixSize,N1-1)-=complex<float>(1,0);	
+					}
+					else if(N1 == 0)
+					{
+					A3(AMatrixSize+1,N2-1) = complex<float>(1,0)/Element[i]->GetFactor();
+					A3(N2-1,AMatrixSize) = complex<float>(1,0);
+					A3(AMatrixSize,N2-1)+=complex<float>(1,0);
+					}
+					else
+					{
+					A3(N2-1,AMatrixSize) = complex<float>(1,0);
+					A3(AMatrixSize,N2-1)+=complex<float>(1,0);
+					A3(N1-1,AMatrixSize) = complex<float>(-1,0);
+					A3(AMatrixSize,N1-1)-=complex<float>(1,0);	
+					A3(AMatrixSize+1,N1-1) = complex<float>(-1,0)/Element[i]->GetFactor();
+					A3(AMatrixSize+1,N2-1) = complex<float>(1,0)/Element[i]->GetFactor();
+					}
+					A3(AMatrixSize,AMatrixSize+1) =complex<float>(-1,0)*Element[i]->GetFactor();
+
+				}
 			}
 			
 
@@ -560,6 +628,28 @@ int main()
 						A(N1-1,N3-1)+=Element[i]->GetFactor()*complex<float>(1,0)/Temp[0]->GetValue();
 					}
 				}
+				else if(Temp[0]->IsCurrentSource())
+				{
+					if(N2 == 0)
+					{
+					Q(N1-1,0)-=Temp[0]->GetValue();
+					}
+					else if(N1 == 0)
+					{
+					Q(N2-1,0)+=Temp[0]->GetValue();
+					}
+					else
+					{
+					Q(N2-1,0)+=Temp[0]->GetValue();
+					Q(N1-1,0)-=Temp[0]->GetValue();
+					}
+				}
+				else
+				{
+
+				}
+
+
 			
 	 }
 
@@ -622,7 +712,6 @@ int main()
 		Q2(i,0)=Q(i,0);
 	} 
 	Q2(EMatrixSize + iMatrixSize,0) = complex<float> (0,0);
-	cout<<A2<<endl<<Q2;
 	Output=A2.inverse()*Q2;
 	int F = CircuitElement::VoltageCounter + Node::NodeCount;
 	for (int i=0;i<=CircuitElement::id+CircuitElement::NumDep;i++)
@@ -635,8 +724,10 @@ int main()
 
 	}
 	}
-	else
+	else if(CircuitElement::NumDep == 0)
 		Output=A.inverse()*Q;
+	else
+		Output = A3.inverse() * Q3;
 for (int i=1;i<=Node::NodeCount;i++)
 	{
 	Nodes[i]->SetVoltage(Output(i-1,0));
