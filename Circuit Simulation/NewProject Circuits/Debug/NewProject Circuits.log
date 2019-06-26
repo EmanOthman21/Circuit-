@@ -1,120 +1,120 @@
-﻿Build started 6/26/2019 3:21:08 PM.
+﻿Build started 6/26/2019 6:20:08 PM.
      1>Project "C:\Users\pc\Desktop\Circuit\Circuit Simulation\NewProject Circuits\NewProject Circuits.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\pc\Desktop\Circuit\Circuit Simulation\packages\Eigen.3.3.3\build\native\../..//build/native/include/" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D HAS_EIGEN /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
          Source.cpp
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(388): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(389): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(390): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(391): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(392): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(398): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(400): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(393): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(394): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(401): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(403): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(404): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(414): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(406): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(407): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(416): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(419): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(420): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(429): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(430): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(418): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(421): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(422): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(431): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(432): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(382) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(489): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(481) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(495): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(481) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(505): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(481) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(506): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(481) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(508): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(481) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(532): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(533): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(534): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(535): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(434): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(384) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(514): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(490) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(537): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(538): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(539): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(541): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(540): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(544): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(545): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(555): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(557): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(546): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(549): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(550): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
      1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(560): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(561): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(570): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(571): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(573): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(526) : definition of 'i' ignored
-                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(367) : definition of 'i' used
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(748): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(755): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(768): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
-     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(782): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(562): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(565): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(566): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(575): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(576): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(578): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(531) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(685): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(676) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(689): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(676) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(693): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(676) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(694): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(676) : definition of 'i' ignored
+                 c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(369) : definition of 'i' used
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(808): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(815): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(828): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
+     1>c:\users\pc\desktop\circuit\circuit simulation\newproject circuits\source.cpp(842): warning C4244: 'argument' : conversion from 'int' to 'const std::complex<float>::_Ty', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pc\Desktop\Circuit\Circuit Simulation\Debug\NewProject Circuits.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\pc\Desktop\Circuit\Circuit Simulation\Debug\NewProject Circuits.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pc\Desktop\Circuit\Circuit Simulation\Debug\NewProject Circuits.lib" /MACHINE:X86 Debug\CircuitElement.obj
          Debug\Input.obj
@@ -125,4 +125,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:48.46
+Time Elapsed 00:00:44.55

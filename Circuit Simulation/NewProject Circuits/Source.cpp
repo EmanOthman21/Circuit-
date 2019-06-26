@@ -357,7 +357,9 @@ int main()
 	MatrixXcd A2 (AMatrixSize+1, AMatrixSize+1);
 	MatrixXcd A3 (AMatrixSize+2, AMatrixSize+2);
 	MatrixXcd Q3 (AMatrixSize+2, 1);
-	bool DO = false;
+	bool DOA1 = false;
+	bool DOA2 = false;
+	bool DOA3 = false;
 	for (int i = 0; i < XMatrixSize; i++)
 	{
 		Output(i,0)=0;
@@ -392,6 +394,7 @@ int main()
 				Temp=Element[i]->ElementBetweenNodes(N3,N4,index,Element);
 				if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
 				{
+					DOA2=true;
 							if(N1 == 0)
 					{
 						if(N4 == 0)
@@ -409,7 +412,6 @@ int main()
 					}
 					else if(N2 == 0)
 					{
-
 						if(N4 == 0)
 						A2(AMatrixSize,N3-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
 						else if(N3 == 0)
@@ -436,8 +438,6 @@ int main()
 						A2(AMatrixSize,N1-1)-=complex<float>(1,0);
 						
 					}
-				DO = true;
-	
 			}
 				else if(Temp[0]->IsCurrentSource())
 				{
@@ -454,12 +454,21 @@ int main()
 					Q(N2-1,0)+=Temp[0]->GetValue();
 					Q(N1-1,0)-=Temp[0]->GetValue();
 					}
-				DO = true;
+				DOA1 = true;
 
 				}
 				else
 				{
-					 
+					DOA3= true;
+					 int index = 0;
+					for (int i = 0; i < CircuitElement::id+CircuitElement::NumDep; i++)
+					{
+						if(Element[i]->IsVoltageSource())
+							index++;
+						if(Element[i]->GetNode1()->GetName() == N3 && Element[i]->GetNode2()->GetName() == N4)
+							break;
+					
+					}
 
 					for (int i = 0; i < AMatrixSize; i++)
 					{
@@ -486,13 +495,11 @@ int main()
 					A3(AMatrixSize+1,AMatrixSize+1) = complex<float>(-1,0);
 					if(N2 == 0)
 					{
-					A3(AMatrixSize+1,N1-1) = complex<float>(-1,0)/Element[i]->GetFactor();
 					A3(N1-1,AMatrixSize) = complex<float>(-1,0);
 					A3(AMatrixSize,N1-1)-=complex<float>(1,0);	
 					}
 					else if(N1 == 0)
 					{
-					A3(AMatrixSize+1,N2-1) = complex<float>(1,0)/Element[i]->GetFactor();
 					A3(N2-1,AMatrixSize) = complex<float>(1,0);
 					A3(AMatrixSize,N2-1)+=complex<float>(1,0);
 					}
@@ -502,18 +509,17 @@ int main()
 					A3(AMatrixSize,N2-1)+=complex<float>(1,0);
 					A3(N1-1,AMatrixSize) = complex<float>(-1,0);
 					A3(AMatrixSize,N1-1)-=complex<float>(1,0);	
-					A3(AMatrixSize+1,N1-1) = complex<float>(-1,0)/Element[i]->GetFactor();
-					A3(AMatrixSize+1,N2-1) = complex<float>(1,0)/Element[i]->GetFactor();
 					}
+					A3(AMatrixSize+1,Node::NodeCount+index-1) = complex<float>(1,0);
 					A3(AMatrixSize,AMatrixSize+1) =complex<float>(-1,0)*Element[i]->GetFactor();
 
 				}
 			}
 			
 
-	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[1]=='v'))
+	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[2]=='v'))
 	 {
-		 DO = true;
+		 DOA2 = true;
 		 for (int i = 0; i < AMatrixSize; i++)
 		 {
 			 for (int j = 0; j < AMatrixSize; j++)
@@ -581,7 +587,7 @@ int main()
 
 	 }
 
-	 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[1]=='c'))
+	 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[2]=='c'))
 	 {
 		 
 		 N1=Element[i]->GetNode1()->GetName();		
@@ -591,6 +597,7 @@ int main()
 				Temp=Element[i]->ElementBetweenNodes(N3,N4,index,Element);
 				if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
 				{
+					DOA1= true;
 					if(N1 == 0)
 					{
 						if(N4 == 0)
@@ -630,6 +637,7 @@ int main()
 				}
 				else if(Temp[0]->IsCurrentSource())
 				{
+					DOA1 =true;
 					if(N2 == 0)
 					{
 					Q(N1-1,0)-=Temp[0]->GetValue();
@@ -646,15 +654,56 @@ int main()
 				}
 				else
 				{
+					 int index = 0;
+					for (int i = 0; i < CircuitElement::id+CircuitElement::NumDep; i++)
+					{
+						if(Element[i]->IsVoltageSource())
+							index++;
+						if(Element[i]->GetNode1()->GetName() == N3 && Element[i]->GetNode2()->GetName() == N4)
+							break;
+						
+					}
 
+					for (int i = 0; i < AMatrixSize; i++)
+					{
+						for (int j = 0; j < AMatrixSize; j++)
+						{
+							A2(i,j) = A(i,j);
+						}
+					 
+					}
+		 
+					for (int i = 0; i < AMatrixSize+1; i++)
+					{
+						A2(AMatrixSize,i) = 0;
+						A2(i,AMatrixSize) = 0;
+					}
+
+					A2(AMatrixSize,AMatrixSize) = complex<float>(-1,0);
+					if(N2 == 0)
+					{
+					A2(N1-1,AMatrixSize) = complex<float>(1,0)*Element[i]->GetFactor();
+					}
+					else if(N1 == 0)
+					{
+					A2(N2-1,AMatrixSize) = complex<float>(-1,0)*Element[i]->GetFactor();
+					}
+					else
+					{
+					A2(N2-1,AMatrixSize) = complex<float>(-1,0)*Element[i]->GetFactor();
+					A2(N1-1,AMatrixSize) = complex<float>(1,0)*Element[i]->GetFactor();
+					}
+					A2(AMatrixSize,Node::NodeCount+index-1) = complex<float>(1,0);
+					DOA2= true;
 				}
 
 
 			
 	 }
 
-	if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[1]=='V'))
+	if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[2]=='V'))
 	{
+		DOA1 =true;
 		N1=Element[i]->GetNode1()->GetName();		
 		 N2=Element[i]->GetNode2()->GetName();		
 		 N3=Element[i]->GetNode3()->GetName();		
@@ -704,7 +753,7 @@ int main()
 		}
 	}
 
-	if(DO)
+	if(DOA2)
 	{
 	MatrixXcd Q2 (EMatrixSize + iMatrixSize+1, 1); 
 	for (int i = 0; i <EMatrixSize + iMatrixSize  ; i++)
@@ -724,10 +773,23 @@ int main()
 
 	}
 	}
-	else if(CircuitElement::NumDep == 0)
+	else if(DOA1)
 		Output=A.inverse()*Q;
-	else
+	else if(DOA3)
+	{
 		Output = A3.inverse() * Q3;
+		int F = CircuitElement::VoltageCounter + Node::NodeCount;
+	for (int i=0;i<=CircuitElement::id+CircuitElement::NumDep;i++)
+	{
+		if(Element[i]->IsDepSource()&&(Element[i]->GetElementName()[0] == 'V' || Element[i]->GetElementName()[0] == 'v'))
+		{
+			Element[i]->SetCurrent(-Output(F,0));
+			F++;
+		}
+	
+	}
+	}
+
 for (int i=1;i<=Node::NodeCount;i++)
 	{
 	Nodes[i]->SetVoltage(Output(i-1,0));
@@ -748,14 +810,14 @@ for (int i=1;i<=Node::NodeCount;i++)
 
 			 }
 			
-			 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[1]=='v'))
+			 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[2]=='v'))
 			 {
 				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
 				 flag--;
 
 			 }
 
-			 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[1]=='c'))
+			 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[2]=='c'))
 			 {
 				 N3=Element[i]->GetNode3()->GetName();
 				 N4=Element[i]->GetNode4()->GetName();
@@ -768,7 +830,7 @@ for (int i=1;i<=Node::NodeCount;i++)
 				flag--;
 			 }
 
-			if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[1]=='V'))
+			if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[2]=='V'))
 			{
 
 				 N3=Element[i]->GetNode3()->GetName();

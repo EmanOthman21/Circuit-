@@ -30,11 +30,11 @@ bool CircuitElement::IsDepSource()
 {
 	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='C'||ElementName[2]=='c'))
 		return true;
-	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[1]=='v'))
+	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[2]=='v'))
 		return true;
-	 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[1]=='c'))
+	 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[2]=='c'))
 		return true;
-	if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[1]=='V'))
+	if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[2]=='V'))
 		return true;
 		return false;
 }
