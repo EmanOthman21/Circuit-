@@ -796,6 +796,30 @@ for (int i=1;i<=Node::NodeCount;i++)
 	}
 	Nodes[0]->SetVoltage(complex <float>(0,0));
 	
+	int o=Node::NodeCount;
+
+	for (int i=0;i<CircuitElement::TempCounter;i++)
+	{
+		
+			if(Element[i]->IsVoltageSource())
+				{Element[i]->SetCurrent((Output(o,0))*complex <double>(-1.0));
+			o++;}
+	}
+
+	
+
+	for (int i=0;i<CircuitElement::TempCounter;i++)
+	{
+		if(Element[i]->IsResistance()||Element[i]->IsCapacitor()||Element[i]->IsInductor())
+		{
+		
+			Element[i]->SetCurrent((((Element[i]->GetNode1())->GetVoltage())-((Element[i]->GetNode2())->GetVoltage()))/Element[i]->GetValue());
+		
+		}
+		
+	}
+
+
 	int flag =CircuitElement::NumDep;
 	int i =0;
 	while(flag)
@@ -827,6 +851,21 @@ for (int i=1;i<=Node::NodeCount;i++)
 				Element[i]->SetCurrent((Nodes[N3]->GetVoltage()-Nodes[N4]->GetVoltage())/Temp[0]->GetValue());
 				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
 				}
+				else if(Temp[0]->IsCurrentSource())
+				{
+					Element[i]->SetCurrent(Element[i]->GetFactor()*Temp[0]->GetValue());
+					Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
+				}
+				else if(Temp[0]->IsVoltageSource())
+				{
+
+				Element[i]->SetCurrent(Temp[0]->GetCurrent());
+				Element[i]->SetVoltage(Temp[0]->GetValue());
+				
+				}
+
+
+
 				flag--;
 			 }
 
@@ -841,6 +880,20 @@ for (int i=1;i<=Node::NodeCount;i++)
 				Element[i]->SetCurrent(Nodes[N3]->GetVoltage()-Nodes[N4]->GetVoltage());
 				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
 				}
+				else if(Temp[0]->IsCurrentSource())
+				{
+					complex <float> t = (Nodes[Element[i]->GetNode3()->GetName()]-Nodes[Element[i]->GetNode4()->GetName()]);
+					Element[i]->SetCurrent(t*Element[i]->GetFactor());
+					Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
+				}
+				else if(Temp[0]->IsVoltageSource())
+				{
+
+				Element[i]->SetCurrent(Temp[0]->GetValue()*Element[i]->GetFactor());
+				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
+				
+				}
+
 				flag--;
 
 			}
@@ -848,28 +901,7 @@ for (int i=1;i<=Node::NodeCount;i++)
 			}
 			i++;
 	}
-    int o=Node::NodeCount;
-
-	for (int i=0;i<CircuitElement::TempCounter;i++)
-	{
-		
-			if(Element[i]->IsVoltageSource())
-				{Element[i]->SetCurrent((Output(o,0))*complex <double>(-1.0));
-			o++;}
-	}
-
-	
-
-	for (int i=0;i<CircuitElement::TempCounter;i++)
-	{
-		if(Element[i]->IsResistance()||Element[i]->IsCapacitor()||Element[i]->IsInductor())
-		{
-		
-			Element[i]->SetCurrent((((Element[i]->GetNode1())->GetVoltage())-((Element[i]->GetNode2())->GetVoltage()))/Element[i]->GetValue());
-		
-		}
-		
-	}
+    
 	std::ofstream ofile("output.txt");
 	for (int i=1;i<=Node::NodeCount;i++)
 	{
