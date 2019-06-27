@@ -46,8 +46,8 @@ int main()
 		CS[i] = new CircuitElement;
 		VSV[i] = new complex<float>;
 	}
-	int vsindex =1;
-	int csindex =1;
+	int vsindex =0;
+	int csindex =0;
 		
 	// constructing maxelement of elements made id = maxelement that's why I reinitialize it
 	CircuitElement::TempCounter = 0;
@@ -55,6 +55,13 @@ int main()
 	
 	Input In("Input.txt",Nodes,Element,CircuitElement::TempCounter,VS,CS,VSV);
 
+	for (int i = 0; i < CircuitElement::id; i++)
+	{
+		if(Element[i]->IsCurrentSource())
+			csindex++;
+		else if(Element[i]->IsVoltageSource())
+			vsindex++;
+	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//																													  //
@@ -356,6 +363,7 @@ int main()
 	MatrixXcd Output(XMatrixSize,1);
 	MatrixXcd A2 (AMatrixSize+1, AMatrixSize+1);
 	MatrixXcd A3 (AMatrixSize+2, AMatrixSize+2);
+	MatrixXcd Q2 (ZMatrixSize+1, 1); 
 	MatrixXcd Q3 (AMatrixSize+2, 1);
 	bool DOA1 = false;
 	bool DOA2 = false;
@@ -363,6 +371,10 @@ int main()
 	for (int i = 0; i < XMatrixSize; i++)
 	{
 		Output(i,0)=0;
+	}
+	for (int i = 0; i < ZMatrixSize+1; i++)
+	{
+		Q2(i,0)=0;
 	}
 	string ElementName;
 	int N1,N2,N3,N4;
@@ -395,16 +407,16 @@ int main()
 				if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
 				{
 					DOA2=true;
-							if(N1 == 0)
+					if(N1 == 0)
 					{
 						if(N4 == 0)
-							A2(AMatrixSize,N3-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
+							A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
 						else if(N3 == 0)
-						A2(AMatrixSize,N4-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+						A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
 						else	
 						{
-							A2(AMatrixSize,N3-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
-							A2(AMatrixSize,N4-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+							A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+							A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
 						}
 						A2(N2-1,AMatrixSize) = complex<float>(1,0);
 						A2(AMatrixSize,N2-1)+=complex<float>(1,0);
@@ -413,13 +425,13 @@ int main()
 					else if(N2 == 0)
 					{
 						if(N4 == 0)
-						A2(AMatrixSize,N3-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
+						A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
 						else if(N3 == 0)
-						A2(AMatrixSize,N4-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+						A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
 						else	
 						{
-							A2(AMatrixSize,N3-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
-							A2(AMatrixSize,N4-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+							A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+							A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
 						}
 						A2(N1-1,AMatrixSize) = complex<float>(-1,0);
 						A2(AMatrixSize,N1-1)-=complex<float>(1,0);
@@ -428,33 +440,40 @@ int main()
 					else
 					{
 
-						A2(AMatrixSize,N4-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
-						A2(AMatrixSize,N3-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
-						A2(AMatrixSize,N1-1)+=complex<float>(1,0);
-						A2(AMatrixSize,N2-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
-						A2(N1-1,AMatrixSize) = complex<float>(-1,0);
-						A2(N2-1,AMatrixSize) = complex<float>(1,0);
 						A2(AMatrixSize,N2-1)+=complex<float>(1,0);
 						A2(AMatrixSize,N1-1)-=complex<float>(1,0);
+						A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()/Temp[0]->GetValue();
+						A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()/Temp[0]->GetValue();
+						A2(N1-1,AMatrixSize)+= complex<float>(-1,0);
+						A2(N2-1,AMatrixSize)+= complex<float>(1,0);
 						
 					}
 			}
 				else if(Temp[0]->IsCurrentSource())
 				{
-					if(N2 == 0)
+					
+					if(N1 == 0)
 					{
-					Q(N1-1,0)-=Temp[0]->GetValue();
+						A2(AMatrixSize,N2-1) +=complex<float>(1,0); 
+						A2(N2-1,AMatrixSize) +=complex<float>(1,0); 
+
 					}
-					else if(N1 == 0)
+					else if(N2 == 0)
 					{
-					Q(N2-1,0)+=Temp[0]->GetValue();
+						A2(AMatrixSize,N1-1) +=complex<float>(-1,0);
+						A2(N1-1,AMatrixSize) +=complex<float>(-1,0);
+
 					}
 					else
 					{
-					Q(N2-1,0)+=Temp[0]->GetValue();
-					Q(N1-1,0)-=Temp[0]->GetValue();
+						A2(N2-1,AMatrixSize) +=complex<float>(1,0); 
+						A2(N1-1,AMatrixSize) +=complex<float>(-1,0);
+						A2(AMatrixSize,N1-1) +=complex<float>(-1,0);
+						A2(AMatrixSize,N2-1) +=complex<float>(1,0);
 					}
-				DOA1 = true;
+
+					Q2 (EMatrixSize + iMatrixSize,0 )= Temp[0]->GetValue()*Element[i]->GetFactor(); 
+					DOA2= true;
 
 				}
 				else
@@ -538,6 +557,57 @@ int main()
 		 N2=Element[i]->GetNode2()->GetName();		
 		 N3=Element[i]->GetNode3()->GetName();		
 		 N4=Element[i]->GetNode4()->GetName();
+		 Temp=Element[i]->ElementBetweenNodes(N3,N4,index,Element);
+				if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
+				{
+								if(N1 == 0)
+					{
+						if(N4 == 0)
+							A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()*complex<float>(1,0);
+						else if(N3 == 0)
+						A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()*complex<float>(1,0);
+						else	
+						{
+							A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()*complex<float>(1,0);
+							A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()*complex<float>(1,0);
+						}
+						A2(N2-1,AMatrixSize) = complex<float>(1,0);
+						A2(AMatrixSize,N2-1)+=complex<float>(1,0);
+						
+					}
+					else if(N2 == 0)
+					{
+
+						if(N4 == 0)
+						A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()*complex<float>(1,0);
+						else if(N3 == 0)
+						A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()*complex<float>(1,0);
+						else	
+						{
+							A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()*complex<float>(1,0);
+							A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()*complex<float>(1,0);
+						}
+						A2(N1-1,AMatrixSize) = complex<float>(-1,0);
+						A2(AMatrixSize,N1-1)-=complex<float>(1,0);
+					}
+			
+					else
+					{
+
+						A2(AMatrixSize,N4-1)+=Element[i]->GetFactor()*complex<float>(1,0);
+						A2(AMatrixSize,N3-1)-=Element[i]->GetFactor()*complex<float>(1,0);
+						A2(AMatrixSize,N1-1)+=complex<float>(1,0);
+						A2(AMatrixSize,N2-1)+=Element[i]->GetFactor()*complex<float>(1,0);
+						A2(N1-1,AMatrixSize) = complex<float>(-1,0);
+						A2(N2-1,AMatrixSize) = complex<float>(1,0);
+						A2(AMatrixSize,N2-1)+=complex<float>(1,0);
+						A2(AMatrixSize,N1-1)-=complex<float>(1,0);
+						
+					}
+		
+				}
+				else
+				{
 					if(N1 == 0)
 					{
 						if(N4 == 0)
@@ -583,6 +653,8 @@ int main()
 						
 					}
 				
+				
+				}
 		
 
 	 }
@@ -640,16 +712,16 @@ int main()
 					DOA1 =true;
 					if(N2 == 0)
 					{
-					Q(N1-1,0)-=Temp[0]->GetValue();
+					Q(N1-1,0)-=Temp[0]->GetValue()*Element[i]->GetFactor();
 					}
 					else if(N1 == 0)
 					{
-					Q(N2-1,0)+=Temp[0]->GetValue();
+					Q(N2-1,0)+=Temp[0]->GetValue()*Element[i]->GetFactor();
 					}
 					else
 					{
-					Q(N2-1,0)+=Temp[0]->GetValue();
-					Q(N1-1,0)-=Temp[0]->GetValue();
+					Q(N2-1,0)+=Temp[0]->GetValue()*Element[i]->GetFactor();
+					Q(N1-1,0)-=Temp[0]->GetValue()*Element[i]->GetFactor();
 					}
 				}
 				else
@@ -708,6 +780,13 @@ int main()
 		 N2=Element[i]->GetNode2()->GetName();		
 		 N3=Element[i]->GetNode3()->GetName();		
 		 N4=Element[i]->GetNode4()->GetName();
+		
+		 Temp=Element[i]->ElementBetweenNodes(N3,N4,index,Element);
+		
+		 if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
+		
+		 {
+		
 					if(N1 == 0)
 					{
 						if(N4 == 0)
@@ -747,6 +826,49 @@ int main()
 					}
 			
 
+		 }
+		 else 
+		 {
+			 
+					if(N1 == 0)
+					{
+						if(N4 == 0)
+						A(N2-1,N3-1)+=Element[i]->GetFactor();
+						else if(N3 == 0)
+						A(N2-1,N4-1)-=Element[i]->GetFactor();
+						else	
+						{
+							A(N2-1,N3-1)+=Element[i]->GetFactor();
+							A(N2-1,N4-1)-=Element[i]->GetFactor();
+						}
+						
+					}
+
+					else if(N2 == 0)
+					{
+
+						if(N4 == 0)
+						A(N1-1,N3-1)+=Element[i]->GetFactor();
+						else if(N3 == 0)
+						A(N1-1,N4-1)-=Element[i]->GetFactor();
+						else	
+						{
+							A(N2-1,N3-1)+=Element[i]->GetFactor();
+							A(N2-1,N4-1)-=Element[i]->GetFactor();
+						}
+					
+					}
+			
+					else
+					{
+
+						A(N2-1,N4-1)-=Element[i]->GetFactor();
+						A(N2-1,N3-1)+=Element[i]->GetFactor();
+						A(N1-1,N4-1)+=Element[i]->GetFactor();
+						A(N1-1,N3-1)-=Element[i]->GetFactor();
+					}
+			
+		 }
 
 	}	
 
@@ -755,12 +877,10 @@ int main()
 
 	if(DOA2)
 	{
-	MatrixXcd Q2 (EMatrixSize + iMatrixSize+1, 1); 
 	for (int i = 0; i <EMatrixSize + iMatrixSize  ; i++)
 	{
 		Q2(i,0)=Q(i,0);
 	} 
-	Q2(EMatrixSize + iMatrixSize,0) = complex<float> (0,0);
 	Output=A2.inverse()*Q2;
 	int F = CircuitElement::VoltageCounter + Node::NodeCount;
 	for (int i=0;i<=CircuitElement::id+CircuitElement::NumDep;i++)
@@ -778,6 +898,7 @@ int main()
 	else if(DOA3)
 	{
 		Output = A3.inverse() * Q3;
+		cout<<endl<<A3<<Q3<<Output;
 		int F = CircuitElement::VoltageCounter + Node::NodeCount;
 	for (int i=0;i<=CircuitElement::id+CircuitElement::NumDep;i++)
 	{
@@ -848,7 +969,7 @@ for (int i=1;i<=Node::NodeCount;i++)
 				Temp=Element[i]->ElementBetweenNodes(N3,N4,index,Element);
 				if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
 				{
-				Element[i]->SetCurrent((Nodes[N3]->GetVoltage()-Nodes[N4]->GetVoltage())/Temp[0]->GetValue());
+					Element[i]->SetCurrent(((Nodes[N3]->GetVoltage()-Nodes[N4]->GetVoltage())/Temp[0]->GetValue())*Element[i]->GetFactor());
 				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
 				}
 				else if(Temp[0]->IsCurrentSource())
@@ -859,7 +980,7 @@ for (int i=1;i<=Node::NodeCount;i++)
 				else if(Temp[0]->IsVoltageSource())
 				{
 
-				Element[i]->SetCurrent(Temp[0]->GetCurrent());
+				Element[i]->SetCurrent(Element[i]->GetFactor()*Temp[0]->GetCurrent());
 				Element[i]->SetVoltage(Temp[0]->GetValue());
 				
 				}
@@ -872,28 +993,21 @@ for (int i=1;i<=Node::NodeCount;i++)
 			if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[2]=='V'))
 			{
 
+				 N1=Element[i]->GetNode1()->GetName();
+				 N2=Element[i]->GetNode2()->GetName();
 				 N3=Element[i]->GetNode3()->GetName();
 				 N4=Element[i]->GetNode4()->GetName();
 				Temp=Element[i]->ElementBetweenNodes(N3,N4,index,Element);
 				if(Temp[0]->IsResistance()||Temp[0]->IsCapacitor()||Temp[0]->IsInductor())
 				{
-				Element[i]->SetCurrent(Nodes[N3]->GetVoltage()-Nodes[N4]->GetVoltage());
-				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
+				Element[i]->SetCurrent((Nodes[N3]->GetVoltage()-Nodes[N4]->GetVoltage())*Element[i]->GetFactor());
+				Element[i]->SetVoltage((Nodes[N2]->GetVoltage()-Nodes[N1]->GetVoltage()));
 				}
-				else if(Temp[0]->IsCurrentSource())
+				else
 				{
-					complex <float> t = (Nodes[Element[i]->GetNode3()->GetName()]-Nodes[Element[i]->GetNode4()->GetName()]);
-					Element[i]->SetCurrent(t*Element[i]->GetFactor());
-					Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
+					Element[i]->SetCurrent((Nodes[N4]->GetVoltage()-Nodes[N3]->GetVoltage())*Element[i]->GetFactor());
+					Element[i]->SetVoltage((Nodes[N2]->GetVoltage()-Nodes[N1]->GetVoltage()));
 				}
-				else if(Temp[0]->IsVoltageSource())
-				{
-
-				Element[i]->SetCurrent(Temp[0]->GetValue()*Element[i]->GetFactor());
-				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()]-Nodes[Element[i]->GetNode2()->GetName()]);
-				
-				}
-
 				flag--;
 
 			}
