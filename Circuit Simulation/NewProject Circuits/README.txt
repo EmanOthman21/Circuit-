@@ -1,8 +1,6 @@
 Team Members
 Mohamed Alaa 
 Mohamed Ahmed Hisham 
-Eman Othman   
-Bassant Mohamed
 
 The input should be written in "input.txt"
 the output will appear after run in "output.txt"
@@ -37,7 +35,7 @@ The dependent Sources is written at form of:
 -CCCS: Current controlled current source
 -CCVS: Current controlled voltage source
 
-VCCS node1 node2 coefficient node3 node4
+VCCS node1 node2 coefficient(real factor) coefficient(complex factor) node3 node4
 when node3 is the first node of the controlled voltage
 node4 is the second node of the controlled  voltage
 
