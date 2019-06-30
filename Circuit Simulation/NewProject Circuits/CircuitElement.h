@@ -4,6 +4,7 @@
 #include "Node.h"
 #include <complex>
 #include <cmath>
+#include <vector>
 using namespace std;
 class CircuitElement
 {
@@ -51,7 +52,7 @@ public:
 	complex<float> GetCurrent() const;
 	complex<float> GetVoltage() const;
 	std::string GetElementName() const;
-	CircuitElement** ElementBetweenNodes(int , int, int& NumOfElemBetweenNodes, CircuitElement**);
+	CircuitElement** ElementBetweenNodes(int , int, int& NumOfElemBetweenNodes, vector<CircuitElement*>);
 	CircuitElement(void);
 	~CircuitElement(void);
 };

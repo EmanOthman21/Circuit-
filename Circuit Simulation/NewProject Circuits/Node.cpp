@@ -4,7 +4,7 @@ Node::Node(void)
 {
 	frequency = 0;
 }
-Node* Node::ArrayOfJoints(Node **Num)
+Node* Node::ArrayOfJoints(vector<Node*>Num)
 {
 	for (int i = 0; i <= Node::NodeCount; i++)
 	{

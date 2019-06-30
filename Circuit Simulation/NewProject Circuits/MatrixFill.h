@@ -9,23 +9,23 @@ class MatrixFill
 	MatrixXcd A;
 	MatrixXcd Output;
 	int AMatrixSize;
-	void CreateMatG(MatrixXcd&,Node**&,CircuitElement**&);
-	void CreateMatI(MatrixXcd&,Node**&,CircuitElement**&);
-	void CreateMatE(MatrixXcd&,complex<float>**&);
+	void CreateMatG(MatrixXcd&, vector<Node*>&, vector<CircuitElement*>&);
+	void CreateMatI(MatrixXcd&, vector<Node*>&, vector<CircuitElement*>&);
+	void CreateMatE(MatrixXcd&,vector<complex<float>*>&);
 	void CreateMatQ(MatrixXcd&,MatrixXcd&);
-	void CreateMatBandC(MatrixXcd&,MatrixXcd&,Node**&,CircuitElement**&,CircuitElement**&);
+	void CreateMatBandC(MatrixXcd&,MatrixXcd&, vector<Node*>&, vector<CircuitElement*>&, vector<CircuitElement*>&);
 	void CreateMatA(MatrixXcd&,MatrixXcd&,MatrixXcd&,MatrixXcd&);
 	void CreateMat(MatrixXcd&,int,int);
-	void CheakDep(Node**&,CircuitElement**&);
-	void VCVS(Node**&,CircuitElement**&,int);
-	void VCCS(Node**&,CircuitElement**&,int);
-	void CCVS(Node**&,CircuitElement**&,int);
-	void CCCS(Node**&,CircuitElement**&,int);
+	void CheakDep(vector<Node*>&,vector<CircuitElement*>&);
+	void VCVS(vector<Node*>&, vector<CircuitElement*>&, int);
+	void VCCS(vector<Node*>&, vector<CircuitElement*>&, int);
+	void CCVS(vector<Node*>&, vector<CircuitElement*>&, int);
+	void CCCS(vector<Node*>&, vector<CircuitElement*>&, int);
 	void CopyMatA(MatrixXcd&);
 	void CopyMatQ(MatrixXcd&);
 public:
-	MatrixFill(Node**,CircuitElement**,CircuitElement**,complex<float>**);
-	void SetOut(Node**,CircuitElement**);
+	MatrixFill(vector<Node*>,vector<CircuitElement*>,vector<CircuitElement*>,vector<complex<float>*>);
+	void SetOut(vector<Node*>,vector<CircuitElement*>);
 	~MatrixFill(void);
 };
 

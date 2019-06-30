@@ -1,5 +1,5 @@
 #include "MatrixFill.h"
-MatrixFill::MatrixFill(Node**Nodes, CircuitElement**Element, CircuitElement**VS, complex<float>**VSV)
+MatrixFill::MatrixFill(vector<Node*>Nodes, vector<CircuitElement*>Element, vector<CircuitElement*>VS, vector<complex<float>*>VSV)
 {
 	AMatrixSize = CircuitElement::VoltageCounter + Node::NodeCount;
 	MatrixXcd A1(AMatrixSize,AMatrixSize) ;
@@ -27,7 +27,7 @@ MatrixFill::MatrixFill(Node**Nodes, CircuitElement**Element, CircuitElement**VS,
 	CheakDep(Nodes,Element);
 	
 }
-void MatrixFill::CheakDep(Node**&Nodes,CircuitElement**&Element)
+void MatrixFill::CheakDep(vector<Node*>&Nodes, vector<CircuitElement*>&Element)
 {
 	string ElementName;
 	for (int i = 0; i < CircuitElement::NumDep+ CircuitElement::id; i++)
@@ -55,7 +55,7 @@ void MatrixFill::CheakDep(Node**&Nodes,CircuitElement**&Element)
 		}
 	}
 }
-void MatrixFill::VCVS(Node**&Nodes,CircuitElement**&Element,int i)
+void MatrixFill::VCVS(vector<Node*>&Nodes, vector<CircuitElement*>&Element, int i)
 {
 	MatrixXcd A2(AMatrixSize+1,AMatrixSize+1);
 	CreateMat(A2,AMatrixSize+1,AMatrixSize+1);
@@ -65,7 +65,7 @@ void MatrixFill::VCVS(Node**&Nodes,CircuitElement**&Element,int i)
 	CreateMat(Q2,AMatrixSize+1,1);
 	CopyMatQ(Q2);
 	Q=Q2;
-	CircuitElement **Temp;
+	CircuitElement** Temp;
 	int N1,N2,N3,N4,index=0;
 	
 	N1=Element[i]->GetNode1()->GetName();		
@@ -160,7 +160,7 @@ void MatrixFill::VCVS(Node**&Nodes,CircuitElement**&Element,int i)
 }
 	AMatrixSize++;
 }
-void MatrixFill::VCCS(Node**&Nodes,CircuitElement**&Element,int i)
+void MatrixFill::VCCS(vector<Node*> &Nodes,vector<CircuitElement*>& Element,int i)
 {
 	MatrixXcd A2(AMatrixSize+1,AMatrixSize+1);
 	CreateMat(A2,AMatrixSize+1,AMatrixSize+1);
@@ -176,7 +176,7 @@ void MatrixFill::VCCS(Node**&Nodes,CircuitElement**&Element,int i)
 	CreateMat(Q3,AMatrixSize+2,1);
 	CopyMatQ(Q3);
 
-	CircuitElement **Temp;
+	CircuitElement** Temp;
 	int N1,N2,N3,N4,index=0;
 	bool DoMatA2 =false,DoMatA3 =false;
 
@@ -291,9 +291,9 @@ void MatrixFill::VCCS(Node**&Nodes,CircuitElement**&Element,int i)
 
 
 }
-void MatrixFill::CCVS(Node**&Nodes,CircuitElement**&Element,int i)
+void MatrixFill::CCVS(vector<Node*>&Nodes, vector<CircuitElement*>& Element,int i)
 {
-	CircuitElement **Temp;
+	CircuitElement** Temp;
 	int N1,N2,N3,N4,index=0;
 
 	N1=Element[i]->GetNode1()->GetName();		
@@ -372,7 +372,7 @@ void MatrixFill::CCVS(Node**&Nodes,CircuitElement**&Element,int i)
  }
 
 }
-void MatrixFill::CCCS(Node**&Nodes,CircuitElement**&Element,int i)
+void MatrixFill::CCCS(vector<Node*>&Nodes, vector<CircuitElement*>& Element,int i)
 {
 	MatrixXcd A2(AMatrixSize+1,AMatrixSize+1);
 	CreateMat(A2,AMatrixSize+1,AMatrixSize+1);
@@ -380,7 +380,7 @@ void MatrixFill::CCCS(Node**&Nodes,CircuitElement**&Element,int i)
 	MatrixXcd Q2(AMatrixSize+1,1);
 	CreateMat(Q2,AMatrixSize+1,1);
 	CopyMatQ(Q2);
-	CircuitElement **Temp;
+	CircuitElement** Temp;
 	int N1,N2,N3,N4,index;
 
 	 N1=Element[i]->GetNode1()->GetName();		
@@ -486,13 +486,13 @@ void MatrixFill::CopyMatQ(MatrixXcd& Q2)
 			Q2(i,0) = Q(i,0);
 	}
 }
-void MatrixFill::CreateMatI(MatrixXcd& I, Node **&Nodes , CircuitElement **&Element)
+void MatrixFill::CreateMatI(MatrixXcd& I, vector<Node*>& Nodes , vector<CircuitElement*>& Element)
 {
 	//size is to store the number of nodes connected to a certain node
 	int size=0,index=0;
 	complex<float> IElement=0;
 	// to store an array of pointers to element between nodes we needed an array because there may be some elements between two nodes in parallel
-	CircuitElement**Temp;
+	CircuitElement** Temp;
 	for (int i = 1; i < Node::NodeCount+1; i++)
 	{
 		size=Nodes[i]->GetConnection().size();
@@ -517,7 +517,7 @@ void MatrixFill::CreateMatI(MatrixXcd& I, Node **&Nodes , CircuitElement **&Elem
 
 	}	
 }
-void MatrixFill::CreateMatE(MatrixXcd& E, complex<float> **&VSV)
+void MatrixFill::CreateMatE(MatrixXcd& E, vector<complex<float>*>& VSV)
 {
 	
 	for(int i=0;i<CircuitElement::VoltageCounter;i++)
@@ -581,7 +581,7 @@ void MatrixFill::CreateMat(MatrixXcd & M , int row , int col)
 		}	
 	}
 }
-void MatrixFill::CreateMatG(MatrixXcd& G, Node **&Nodes , CircuitElement **&Element)
+void MatrixFill::CreateMatG(MatrixXcd& G, vector<Node*>&Nodes , vector<CircuitElement*>&Element)
 {
 	// some variable that will be used to store the number of elements in parallel between any two nodes by sending it by reference to the function (ElementsBetweenNodes) 
 	int index=0;
@@ -591,11 +591,11 @@ void MatrixFill::CreateMatG(MatrixXcd& G, Node **&Nodes , CircuitElement **&Elem
 	//size is to store the number of nodes connected to a certain node
 	int size=0,c=0;
 	// to store an array of pointers to element between nodes we needed an array because there may be some elements between two nodes in parallel
-	CircuitElement**Temp;
+	CircuitElement** Temp;
 	//loop to iterate through every row in the G matrix i represents the node name so we started from 1 not zero as the MNA method excludes the ground
 	for (int i = 1; i < Node::NodeCount+1; i++)
 	{
-		size=Nodes[i]->GetConnection().size();
+		size = Nodes[i]->GetConnection().size();
 		//loops over every node connected to the node in the current row
 		for (std::set<int>::iterator it = Nodes[i]->GetConnection().begin(); it != Nodes[i]->GetConnection().end(); ++it)
 		{
@@ -634,11 +634,11 @@ void MatrixFill::CreateMatG(MatrixXcd& G, Node **&Nodes , CircuitElement **&Elem
 		GElement = 0;
 	}
 }
-void MatrixFill::CreateMatBandC(MatrixXcd &B, MatrixXcd &C, Node **&Nodes , CircuitElement **&Element, CircuitElement**&VS)
+void MatrixFill::CreateMatBandC(MatrixXcd &B, MatrixXcd &C, vector<Node*>& Nodes , vector<CircuitElement*>& Element, vector<CircuitElement*>& VS)
 {
 	int index=0;
 	int size=0,c=0;
-	CircuitElement**Temp;
+	CircuitElement** Temp;
 	// to iterate through everynode execuling the ground
 	for (int i = 1; i < Node::NodeCount+1; i++)
 	{
@@ -676,7 +676,7 @@ void MatrixFill::CreateMatBandC(MatrixXcd &B, MatrixXcd &C, Node **&Nodes , Circ
 	}
 
 }
-void MatrixFill::SetOut(Node** Nodes,CircuitElement** Element)
+void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
 {
 	MatrixXcd A1;
 	MatrixXcd Q1;
@@ -684,7 +684,7 @@ void MatrixFill::SetOut(Node** Nodes,CircuitElement** Element)
 	Q1=Q;
 	Output=A1.inverse()*Q1;
 	int F = CircuitElement::VoltageCounter + Node::NodeCount;
-	for (int i=0;i<=CircuitElement::id+CircuitElement::NumDep;i++)
+	for (int i=0; i<CircuitElement::id+CircuitElement::NumDep; i++)
 	{
 		if(Element[i]->IsDepSource()&&(Element[i]->GetElementName()[0] == 'V' || Element[i]->GetElementName()[0] == 'v'))
 		{
@@ -715,7 +715,7 @@ void MatrixFill::SetOut(Node** Nodes,CircuitElement** Element)
 		}
 	}
 
-	CircuitElement **Temp;
+	CircuitElement** Temp;
 	string ElementName;
 	int N1,N2,N3,N4;	
 	int flag =CircuitElement::NumDep;

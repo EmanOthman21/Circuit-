@@ -2,6 +2,7 @@
 #include <string>
 #include <set>
 #include <complex>
+#include <vector>
 using namespace std;
 #define MaxElements 1000
 class Node
@@ -23,7 +24,7 @@ public:
 	std::set<int>& GetConnection();
 	void Connect (int);
 	void IncrementFrequency();
-	Node* ArrayOfJoints(Node **);
+	Node* ArrayOfJoints(vector<Node*>);
 };
 
 

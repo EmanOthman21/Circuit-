@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <iostream>
 #include "CircuitElement.h"
 #include <fstream>
@@ -8,10 +9,10 @@ class Input
 	string FileName;
 	ifstream FileInput;
 public:
-	Input(const string, Node**, CircuitElement**,int&, CircuitElement**, CircuitElement**, complex<float>**);
-	void Read_Dependant(const string,complex<float>&, Node**&, CircuitElement**&,int &);
-	void Read_Resistor_Capacitor_Inductor(const string, Node**&, CircuitElement**&,int &);
-	void Read_Voltage_Source_Current_Source(int&,int&,const string, Node**&, CircuitElement**&,int &, CircuitElement**&, CircuitElement**&, complex<float>**&);
+	Input(const string, vector<Node*>&, vector<CircuitElement*>&, int&, vector<CircuitElement*>&, vector<CircuitElement*>&, vector<complex<float>*>&);
+	void Read_Dependant(const string, complex<float>&, vector<Node*>&, vector<CircuitElement*>&, int&);
+	void Read_Voltage_Source_Current_Source(int&, int&, const string, vector<Node*>&, vector<CircuitElement*>&, int&, vector<CircuitElement*>&, vector<CircuitElement*>&, vector<complex<float>*>&);
+	void Read_Resistor_Capacitor_Inductor(const string, vector<Node*>&, vector<CircuitElement*>&,int &);
 	~Input(void);
 };
 

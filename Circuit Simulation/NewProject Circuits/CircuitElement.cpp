@@ -28,6 +28,8 @@ void CircuitElement::SetNode4(Node* n)
 }
 bool CircuitElement::IsDepSource()
 {
+	if (ElementName.length() < 3)
+		return false;
 	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='C'||ElementName[2]=='c'))
 		return true;
 	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[2]=='v'))
@@ -195,7 +197,7 @@ complex<float> CircuitElement::GetVoltage() const
 	return Voltage;
 }
 
-CircuitElement** CircuitElement::ElementBetweenNodes(int n1, int n2, int& NumOfElemBetweenNodes, CircuitElement **Element)
+CircuitElement** CircuitElement::ElementBetweenNodes(int n1, int n2, int& NumOfElemBetweenNodes, vector<CircuitElement*> Element)
 {	
 	NumOfElemBetweenNodes = 0;
 	int node1=0;
