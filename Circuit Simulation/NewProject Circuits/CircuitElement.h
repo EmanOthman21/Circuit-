@@ -15,6 +15,7 @@ class CircuitElement
 	complex <float> Voltage;
 	complex <float> FactorValue;
 public:
+	static string OutMethod;
 	static float W;
 	static int VoltageCounter;
 	static int ResistanceCounter;

@@ -1,0 +1,100 @@
+
+
+else
+	{
+		float VoltagePhase =0 ;
+		complex<float> val ;
+		complex<float> imag = 0 , real = 0;
+		for (int i=1;i<=Node::NodeCount;i++)
+		{
+			val =Nodes[i]->GetVoltage();
+			imag = val.imag;
+			real = val.real;
+			if(imag == 0.0 && real > 0.0)
+			{
+				VoltagePhase = 90 ;
+			}
+			else if(imag == 0 && real < 0)
+			{
+				VoltagePhase = 270;
+			}
+			else if(imag == 0 && real == 0)
+			{
+				VoltagePhase = 0;
+			}
+			else
+				VoltagePhase = atan2(imag,real);
+			FileOutput << "V("<< i<< ")   "<<sqrt(pow((real),2)+pow((imag),2))<< "<" << VoltagePhase << std::endl;
+		}
+		for (int i=0;i<CircuitElement::TempCounter;i++)
+		{
+			FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< Element[i]->GetCValue() << "<" << Element[i]->GetCPhase() << std::endl;
+		}
+	}
+void CircuitElement::SetCValue(complex<float> val)
+{
+	CurrentValue = sqrt(pow((val.real),2)+pow((val.imag),2));
+}
+
+void CircuitElement::SetVValue(complex<float> val)
+{
+	VoltageValue = sqrt(pow((val.real),2)+pow((val.imag),2));
+
+}
+void CircuitElement::SetCPhase(complex<float> val)
+{
+	if(val.imag == 0 && val.real > 0)
+	{
+	CurrentPhase = 90 ;
+	}
+	else if(val.imag == 0 && val.real < 0)
+	{
+		CurrentPhase = 270;
+	}
+	else if(val.imag == 0 && val.real == 0)
+	{
+		CurrentPhase = 0;
+	}
+	else
+	{
+		CurrentPhase = atan2(val.imag,val.real);
+	}
+
+}
+void CircuitElement::SetVPhase(complex<float> val)
+{
+	
+	if(val.imag == 0 && val.real > 0)
+	{
+	VoltagePhase = 90 ;
+	}
+	else if(val.imag == 0 && val.real < 0)
+	{
+		VoltagePhase = 270;
+	}	
+	else if(val.imag == 0 && val.real == 0)
+	{
+		VoltagePhase = 0;
+	}
+	else
+	VoltagePhase = atan2(val.imag,val.real);
+
+}
+
+
+float CircuitElement::GetVValue() const
+{
+	return VoltageValue;
+}
+float CircuitElement::GetCValue() const
+{
+	return CurrentValue;
+}
+float CircuitElement::GetVPhase() const
+{
+	return VoltagePhase;
+}
+float CircuitElement::GetCPhase() const
+{
+	return CurrentPhase;
+}

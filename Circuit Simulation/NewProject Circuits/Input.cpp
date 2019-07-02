@@ -21,6 +21,11 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 				break;
 			}
 			FileInput >> elename;
+			if(elename.length() == 1 )
+			{
+				CircuitElement::OutMethod = elename;
+			}
+
 			if ((toupper(elename[0]) == 'C' && toupper(elename[2]) == 'C') || (toupper(elename[0]) == 'C' && toupper(elename[2]) == 'V') || (toupper(elename[0]) == 'V' && toupper(elename[2]) == 'V') || (toupper(elename[0]) == 'V' && toupper(elename[2]) == 'C'))
 			{
 				Read_Dependant(elename, Factor[CircuitElement::NumDep], Nodes, Element, TempCounter);

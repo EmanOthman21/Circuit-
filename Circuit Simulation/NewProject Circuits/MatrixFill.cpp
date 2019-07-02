@@ -780,6 +780,10 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
 			}
 			i++;
 	}
+	
+
+
+
 }
 MatrixFill::~MatrixFill(void)
 {

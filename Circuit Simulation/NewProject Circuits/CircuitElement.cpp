@@ -41,6 +41,7 @@ bool CircuitElement::IsDepSource()
 		return false;
 }
 
+
 void CircuitElement::SetValue(float val)
 {
 	if(IsResistance())
@@ -52,7 +53,8 @@ void CircuitElement::SetValue(float val)
 }
 void CircuitElement::SetValueOfVoltageandCurrent (float val,float Phase)
 { 
-	Value=complex<float> (val*cos((Phase/180)*3.1415926535897932384626433832795028841971),val*sin((Phase/180)*3.1415926535897932384626433832795028841971));
+	 
+	Value=complex<float> (val*(cos((Phase*3.1415926535897931/180))-cos(acos(0))),val*(sin((Phase*3.1415926535897931/180))-cos(acos(0))));
 }
 
 
@@ -68,7 +70,7 @@ void CircuitElement::Setid(int i)
 
 	void CircuitElement::SetVoltage(complex<float> v)
 {
-	Voltage = v;
+	Voltage = v;	
 }
 void CircuitElement::SetCurrent(complex<float> x)
 {
@@ -173,6 +175,8 @@ complex <float> CircuitElement::GetValue() const
 {
 	return Value;
 }
+
+
 
 complex <float> CircuitElement::GetFactor() const
 {

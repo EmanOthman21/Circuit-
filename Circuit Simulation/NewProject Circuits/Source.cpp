@@ -7,6 +7,7 @@ int CircuitElement::id = 0;
 float CircuitElement::W = 0;
 int CircuitElement::TempCounter = 0;
 int CircuitElement::NumDep = 0;
+string CircuitElement::OutMethod = "";
 //The total number of nodes	in the entered circuit 
 int Node::NodeCount = 0;
 int Node::JointNum = 0;
@@ -58,6 +59,7 @@ int main()
 	{
 		FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<<Element[i]->GetCurrent()<< std::endl;
 	}
+	
 }
 
 	
