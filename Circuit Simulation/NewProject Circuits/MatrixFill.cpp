@@ -30,7 +30,7 @@ MatrixFill::MatrixFill(vector<Node*>Nodes, vector<CircuitElement*>Element, vecto
 void MatrixFill::CheakDep(vector<Node*>&Nodes, vector<CircuitElement*>&Element)
 {
 	string ElementName;
-	for (int i = 0; i < CircuitElement::NumDep+ CircuitElement::id; i++)
+	for (int i = 0; i <  CircuitElement::id; i++)
 	{
 		ElementName = Element[i]->GetElementName();
 		if(Element[i]->IsDepSource())
@@ -684,7 +684,7 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
 	Q1=Q;
 	Output=A1.inverse()*Q1;
 	int F = CircuitElement::VoltageCounter + Node::NodeCount;
-	for (int i=0; i<CircuitElement::id+CircuitElement::NumDep; i++)
+	for (int i=0; i<CircuitElement::id; i++)
 	{
 		if(Element[i]->IsDepSource()&&(Element[i]->GetElementName()[0] == 'V' || Element[i]->GetElementName()[0] == 'v'))
 		{
