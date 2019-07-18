@@ -76,7 +76,7 @@ void CircuitElement::Setid(int i)
 	id = i; 
 }
 
-	void CircuitElement::SetVoltage(complex<float> v)
+void CircuitElement::SetVoltage(complex<float> v)
 {
 	Voltage = v;	
 }
@@ -117,12 +117,10 @@ bool CircuitElement::IsCapacitor()
 	
 }
 
-
-bool CircuitElement::IsCurrentSource ()
+bool CircuitElement::IsCurrentSource()
 {
-	if(toupper(ElementName[0])=='I' && toupper(ElementName[1])!='C')
+	if(toupper(ElementName[0])=='I')
 	{ 
-
 		SetCurrent(Value);
 		return true;
 	}
@@ -206,7 +204,7 @@ CircuitElement** CircuitElement::ElementBetweenNodes(int n1, int n2, int& NumOfE
 	NumOfElemBetweenNodes = 0;
 	int node1=0;
 	int node2=0;
-	CircuitElement **parallelresistances = new CircuitElement*[MaxElements];
+	CircuitElement **parallelresistances = new CircuitElement*[CircuitElement::id];
 	for (int i = 0; i < CircuitElement::id; i++)
 	{
 		node1=Element[i]->GetNode1()->GetName();
