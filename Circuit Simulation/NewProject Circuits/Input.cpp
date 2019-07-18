@@ -1,12 +1,10 @@
 #include "Input.h"
 
-Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter, vector<CircuitElement*>& VS, vector<CircuitElement*>& CS, vector<complex<float>*>& VSV)
+Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter, vector<CircuitElement*>& VS, vector<CircuitElement*>& CS, vector<complex<float>>& VSV)
 {
 	FileName = S;
 	// some variables for the dependant sources
 	complex<float>Factor[100];
-	int vsindex = 1;
-	int csindex = 1;
 	FileInput.open("../Input Circuits/" + FileName);
 	if (FileInput.is_open())
 	{
@@ -39,7 +37,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 			}
 			else if (EleName[0] == 'V' || EleName[0] == 'v' || (EleName[0] == 'I' || EleName[0] == 'i'))
 			{
-				Read_Voltage_Source_Current_Source(vsindex, csindex, EleName, Nodes, Element, TempCounter, VS, CS, VSV);
+				Read_Voltage_Source_Current_Source(EleName, Nodes, Element, TempCounter, VS, CS, VSV);
 			}
 			else
 			{
@@ -78,7 +76,7 @@ void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<N
 
 }
 
-void Input::Read_Voltage_Source_Current_Source( int& vsindex , int& csindex ,const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>*>&VSV)
+void Input::Read_Voltage_Source_Current_Source(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>>&VSV)
 {
 
 	int n1 , n2 , M ,val,Phase;
@@ -94,15 +92,12 @@ void Input::Read_Voltage_Source_Current_Source( int& vsindex , int& csindex ,con
 	//to store the voltage sources in an array of elements
 	if(TempElem->IsVoltageSource())
 	{
-		VS[vsindex]= TempElem;
-		VSV[vsindex] = new complex<float>;
-		*VSV[vsindex]=VS[vsindex]->GetValue();
-		vsindex++;
+		VS.push_back(TempElem);
+		VSV.push_back(TempElem->GetValue());
 	}
 	if(TempElem->IsCurrentSource())
 	{
-		CS[csindex]=TempElem;
-		csindex++;
+		CS.push_back(TempElem);
 	}
 	Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
 	Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 

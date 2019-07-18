@@ -1,5 +1,5 @@
 #include "MatrixFill.h"
-MatrixFill::MatrixFill(vector<Node*>Nodes, vector<CircuitElement*>Element, vector<CircuitElement*>VS, vector<complex<float>*>VSV)
+MatrixFill::MatrixFill(vector<Node*>Nodes, vector<CircuitElement*>Element, vector<CircuitElement*>VS, vector<complex<float>>VSV)
 {
 	AMatrixSize = CircuitElement::VoltageCounter + Node::NodeCount;
 	MatrixXcd A1(AMatrixSize,AMatrixSize) ;
@@ -517,12 +517,12 @@ void MatrixFill::CreateMatI(MatrixXcd& I, vector<Node*>& Nodes , vector<CircuitE
 
 	}	
 }
-void MatrixFill::CreateMatE(MatrixXcd& E, vector<complex<float>*>& VSV)
+void MatrixFill::CreateMatE(MatrixXcd& E, vector<complex<float>>& VSV)
 {
 	
 	for(int i=0;i<CircuitElement::VoltageCounter;i++)
 	{
-	E(i,0)=*VSV[i+1];
+		E(i, 0) = VSV[i];
 	}
 
 }

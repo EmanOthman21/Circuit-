@@ -30,13 +30,10 @@ int main()
 	Node* Joints;
 	//array of voltage sources
 	vector<CircuitElement*> VS;
-	VS.resize(MaxElements);
 	//array of Current sources
 	vector<CircuitElement*> CS;
-	CS.resize(MaxElements);
 	//array of voltage sources values
-	vector<complex<float>*> VSV;
-	VSV.resize(MaxElements);
+	vector<complex<float>> VSV;
 
 	cout << "Please, write the input file name : ";
 	std::getline(std::cin, FileName);
