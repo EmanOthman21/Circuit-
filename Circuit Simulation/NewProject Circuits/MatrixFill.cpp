@@ -35,15 +35,15 @@ void MatrixFill::CheakDep(vector<Node*>&Nodes, vector<CircuitElement*>&Element)
 		ElementName = Element[i]->GetElementName();
 		if(Element[i]->IsDepSource())
 		{
-			 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[2]=='v'))
+			 if(toupper(ElementName[0]) =='V' && toupper(ElementName[2]) == 'V')
 			 {
 				 VCVS(Nodes,Element,i);
 			 }
-			 else  if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='C'||ElementName[2]=='c'))
+			 else  if(toupper(ElementName[0]) == 'V' && toupper(ElementName[2]) == 'C')
 			 {
 				 VCCS(Nodes,Element,i);
 			 }
-			 else  if((ElementName[0]=='C'||ElementName[0]=='c')&&(ElementName[2]=='V'||ElementName[2]=='v'))
+			 else  if(toupper(ElementName[0]) == 'C' && toupper(ElementName[2]) == 'V')
 			 {
 				 CCVS(Nodes,Element,i);
 
@@ -577,7 +577,7 @@ void MatrixFill::CreateMat(MatrixXcd & M , int row , int col)
 	{
 		for (int j = 0; j < col; j++)
 		{
-		M(i,j) = 0;
+			M(i, j) = 0;
 		}	
 	}
 }
