@@ -207,7 +207,7 @@ CircuitElement** CircuitElement::ElementBetweenNodes(int n1, int n2, int& NumOfE
 	int node1=0;
 	int node2=0;
 	CircuitElement **parallelresistances = new CircuitElement*[MaxElements];
-	for (int i = 0; i <= CircuitElement::id; i++)
+	for (int i = 0; i < CircuitElement::id; i++)
 	{
 		node1=Element[i]->GetNode1()->GetName();
 		node2=Element[i]->GetNode2()->GetName();

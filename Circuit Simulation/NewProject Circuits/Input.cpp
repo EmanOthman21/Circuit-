@@ -70,20 +70,19 @@ void Input::Read_Dependant(const string elename,complex<float>& Factor, vector<N
 	Nodes[n2]->SetName(n2);
 	Nodes[M]->SetName(M);
 	Nodes[N]->SetName(N);
-	Element[CircuitElement::TempCounter - 1] = new CircuitElement;
-	CircuitElement::TempCounter--;
-	Element[CircuitElement::TempCounter]->Setid(CircuitElement::TempCounter);
-	Element[CircuitElement::TempCounter]->SetElementName(elename);
-	Element[CircuitElement::TempCounter]->SetNode1(Nodes[n1]);
-	Element[CircuitElement::TempCounter]->GetNode1()->Connect(n2);
-	Element[CircuitElement::TempCounter]->GetNode1()->IncrementFrequency();
-	Element[CircuitElement::TempCounter]->SetNode2(Nodes[n2]);
-	Element[CircuitElement::TempCounter]->GetNode2()->Connect(n1);
-	Element[CircuitElement::TempCounter]->GetNode2()->IncrementFrequency();
-	Element[CircuitElement::TempCounter]->SetNode3(Nodes[M]);
-	Element[CircuitElement::TempCounter]->SetNode4(Nodes[N]);
-	Element[CircuitElement::TempCounter]->SetFactor(Factor);
-	CircuitElement::TempCounter++;
+	CircuitElement* temppointer = new CircuitElement;
+	temppointer->Setid(CircuitElement::TempCounter);
+	temppointer->SetElementName(elename);
+	temppointer->SetNode1(Nodes[n1]);
+	temppointer->GetNode1()->Connect(n2);
+	temppointer->GetNode1()->IncrementFrequency();
+	temppointer->SetNode2(Nodes[n2]);
+	temppointer->GetNode2()->Connect(n1);
+	temppointer->GetNode2()->IncrementFrequency();
+	temppointer->SetNode3(Nodes[M]);
+	temppointer->SetNode4(Nodes[N]);
+	temppointer->SetFactor(Factor);
+	Element.push_back(temppointer);
 
 }
 
@@ -98,34 +97,32 @@ void Input::Read_Voltage_Source_Current_Source( int& vsindex , int& csindex ,con
 		Nodes[n2] = new Node;
 	Nodes[n1]->SetName(n1);
 	Nodes[n2]->SetName(n2);
-	Element[CircuitElement::TempCounter - 1] = new CircuitElement;
-	CircuitElement::TempCounter--;
-	Element[CircuitElement::TempCounter]->Setid(CircuitElement::TempCounter);
-	Element[CircuitElement::TempCounter]->SetElementName(elename);
-	Element[CircuitElement::TempCounter]->SetNode1(Nodes[n1]);
-	Element[CircuitElement::TempCounter]->GetNode1()->Connect(n2);
-	Element[CircuitElement::TempCounter]->GetNode1()->IncrementFrequency();
-	Element[CircuitElement::TempCounter]->SetNode2(Nodes[n2]);
-	Element[CircuitElement::TempCounter]->GetNode2()->Connect(n1);
-	Element[CircuitElement::TempCounter]->GetNode2()->IncrementFrequency();
-	Element[CircuitElement::TempCounter]->SetValueOfVoltageandCurrent(val,Phase);
+	CircuitElement* temppointer = new CircuitElement;
+	temppointer->Setid(CircuitElement::TempCounter);
+	temppointer->SetElementName(elename);
+	temppointer->SetNode1(Nodes[n1]);
+	temppointer->GetNode1()->Connect(n2);
+	temppointer->GetNode1()->IncrementFrequency();
+	temppointer->SetNode2(Nodes[n2]);
+	temppointer->GetNode2()->Connect(n1);
+	temppointer->GetNode2()->IncrementFrequency();
+	temppointer->SetValueOfVoltageandCurrent(val,Phase);
 	//to store the voltage sources in an array of elements
-	if(Element[CircuitElement::TempCounter]->IsVoltageSource())
+	if(temppointer->IsVoltageSource())
 	{
-		VS[vsindex]=Element[CircuitElement::TempCounter];
+		VS[vsindex]= temppointer;
 		VSV[vsindex] = new complex<float>;
 		*VSV[vsindex]=VS[vsindex]->GetValue();
 		vsindex++;
 	}
-	if(Element[CircuitElement::TempCounter]->IsCurrentSource())
+	if(temppointer->IsCurrentSource())
 	{
-		CS[csindex]=Element[CircuitElement::TempCounter];
+		CS[csindex]=temppointer;
 		csindex++;
 	}
 	Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
 	Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 
-	CircuitElement::TempCounter++;
-
+	Element.push_back(temppointer);
 }
 
 void Input::Read_Resistor_Capacitor_Inductor(const string elename, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter)
@@ -138,20 +135,19 @@ void Input::Read_Resistor_Capacitor_Inductor(const string elename, vector<Node*>
 			Nodes[n2] = new Node;
 		Nodes[n1]->SetName(n1);
 		Nodes[n2]->SetName(n2);
-		Element[CircuitElement::TempCounter - 1] = new CircuitElement;
-		CircuitElement::TempCounter--;
-		Element[CircuitElement::TempCounter]->Setid(CircuitElement::TempCounter);
-		Element[CircuitElement::TempCounter]->SetElementName(elename);
-		Element[CircuitElement::TempCounter]->SetNode1(Nodes[n1]);
-		Element[CircuitElement::TempCounter]->GetNode1()->Connect(n2);
-		Element[CircuitElement::TempCounter]->GetNode1()->IncrementFrequency();
-		Element[CircuitElement::TempCounter]->SetNode2(Nodes[n2]);
-		Element[CircuitElement::TempCounter]->GetNode2()->Connect(n1);
-		Element[CircuitElement::TempCounter]->GetNode2()->IncrementFrequency();
-		Element[CircuitElement::TempCounter]->SetValue(val);
+		CircuitElement* temppointer = new CircuitElement;
+		temppointer->Setid(CircuitElement::TempCounter);
+		temppointer->SetElementName(elename);
+		temppointer->SetNode1(Nodes[n1]);
+		temppointer->GetNode1()->Connect(n2);
+		temppointer->GetNode1()->IncrementFrequency();
+		temppointer->SetNode2(Nodes[n2]);
+		temppointer->GetNode2()->Connect(n1);
+		temppointer->GetNode2()->IncrementFrequency();
+		temppointer->SetValue(val);
 		Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
 		Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 
-		CircuitElement::TempCounter++;
+		Element.push_back(temppointer);
 
 }
 

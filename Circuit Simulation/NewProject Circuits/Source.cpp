@@ -23,7 +23,6 @@ int main()
 	string FileName;
 	//array of the different elements of the circuit
 	vector<CircuitElement*> Element;
-	Element.resize(MaxElements);
 	//array of Nodes
 	vector<Node*> Nodes;
 	Nodes.resize(MaxElements);
