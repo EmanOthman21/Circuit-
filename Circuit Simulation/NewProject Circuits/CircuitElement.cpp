@@ -44,26 +44,20 @@ bool CircuitElement::IsDepSource()
 {
 	if (ElementName.length() < 3)
 		return false;
-	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='C'||ElementName[2]=='c'))
+	if ((toupper(ElementName[0]) == 'V' || toupper(ElementName[0]) == 'C') && (toupper(ElementName[2]) == 'V' || toupper(ElementName[2]) == 'C'))
 		return true;
-	 if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[2]=='V'||ElementName[2]=='v'))
-		return true;
-	 if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='C'||ElementName[2]=='c'))
-		return true;
-	if((ElementName[0]=='C'||ElementName[0]=='C')&&(ElementName[2]=='V'||ElementName[2]=='V'))
-		return true;
-		return false;
+	return false;
 }
 
 
 void CircuitElement::SetValue(float val)
 {
-	if(IsResistance())
-		Value=complex<float>(val,0);
+	if (IsResistance())
+		Value = complex<float>(val, 0);
 	else if (IsCapacitor())
-		Value =complex<float>(0,-1/(W*val));
+		Value = complex<float>(0, -1 / (W * val));
 	else if (IsInductor())
-		Value=complex<float>(0,W*val);
+		Value = complex<float>(0, W * val);
 }
 void CircuitElement::SetValueOfVoltageandCurrent (float val,float Phase)
 { 
@@ -88,36 +82,34 @@ void CircuitElement::Setid(int i)
 }
 void CircuitElement::SetCurrent(complex<float> x)
 {
-	Current=x;
+	Current = x;
 }
 void CircuitElement::SetCounter()
 {
-	if((ElementName[0]=='v'||ElementName[0]=='V')&&!IsDepSource())
+	if(toupper(ElementName[0])=='V' && !IsDepSource())
 	{
 		VoltageCounter++;
 	}
-
-	if(ElementName[0]=='r'||ElementName[0]=='R')
+	if(IsResistance())
 	{
-		ResistanceCounter ++;
+		ResistanceCounter++;
 	}
-	if(ElementName[0]=='l'||ElementName[0]=='L')
+	if(IsInductor())
 	{
-		inductorCounter ++;
+		inductorCounter++;
 	}
-	if(ElementName[0]=='C'||ElementName[0]=='c')
+	if(IsCapacitor())
 	{
-		CapacitorCounter ++;
+		CapacitorCounter++;
 	}
-	if((ElementName[0]=='i'||ElementName[0]=='I'))
-	
+	if(toupper(ElementName[0]) == 'I')
 	{
 		CurrentCounter++;
 	}
 }
 bool CircuitElement::IsCapacitor()
 {
-	if((ElementName[0]=='C'||ElementName[0]=='c')&&!IsDepSource())
+	if(toupper(ElementName[0])=='C' && !IsDepSource())
 	{
 		return true;
 	}
@@ -128,7 +120,7 @@ bool CircuitElement::IsCapacitor()
 
 bool CircuitElement::IsCurrentSource ()
 {
-	if((ElementName[0]=='i'||ElementName[0]=='I')&&(ElementName[1]!='C'||ElementName[1]!='c'))
+	if(toupper(ElementName[0])=='I' && toupper(ElementName[1])!='C')
 	{ 
 
 		SetCurrent(Value);
@@ -140,30 +132,24 @@ bool CircuitElement::IsCurrentSource ()
 
 bool CircuitElement::IsInductor ()
 {
-	if(ElementName[0]=='l'||ElementName[0]=='L')
-	{
+	if(toupper(ElementName[0]) == 'L')
 		return true;
-	}
 	return false;
 }
 
 
 bool CircuitElement::IsResistance ()
 {
-	if(ElementName[0]=='r'||ElementName[0]=='R')
-	{
+	if(toupper(ElementName[0]) == 'R')
 		return true;
-	}
 	return false;
 }
 
 
 bool CircuitElement::IsVoltageSource ()
 {
-	if((ElementName[0]=='v'||ElementName[0]=='V')&&(ElementName[1]!='C'&&ElementName[1]!='c'))
-	{
+	if(toupper(ElementName[0]) == 'V' && toupper(ElementName[1]!='C'))
 		return true;
-	}
 	return false;
 }
 

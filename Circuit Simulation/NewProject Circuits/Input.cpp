@@ -50,7 +50,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 	}
 	else
 	{
-		std::cout << "cannot open the file\nPlease, check the name of the file is writtern correctly\n\n";
+		std::cout << "cannot open the file\nPlease, check the name of the file is written correctly\n\n";
 		exit(-1);
 	}
 
