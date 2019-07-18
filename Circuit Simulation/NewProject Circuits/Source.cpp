@@ -1,6 +1,7 @@
 ﻿#include <complex>
 #include <vector>
 #include <cmath>
+#include <dirent.h>
 #include"MatrixFill.h"
 #define MaxElements 1000
 int CircuitElement::id = 0;
@@ -35,7 +36,24 @@ int main()
 	//array of voltage sources values
 	vector<complex<float>> VSV;
 
-	cout << "Please, write the input file name : ";
+	cout << "You have existing input circuits in input circuit folder:\n\n";
+	DIR* dir;
+	struct dirent* ent;
+	if ((dir = opendir("../Input Circuits/")) != NULL) {
+		/* print all the files and directories within directory */
+		while ((ent = readdir(dir)) != NULL) {
+			if(ent->d_name[0] != '.')
+				printf("%s\n", ent->d_name);
+		}
+		closedir(dir);
+	}
+	else {
+		/* could not open directory */
+		perror("");
+		return EXIT_FAILURE;
+	}
+
+	cout << "\n\nPlease, write the input file name : ";
 	std::getline(std::cin, FileName);
 	Input In(FileName + ".txt", Nodes, Element, CircuitElement::TempCounter, VS, CS, VSV);
 	MatrixFill M(Nodes,Element,VS,VSV);
