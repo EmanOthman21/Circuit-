@@ -4,6 +4,10 @@ Node::Node(void)
 {
 	frequency = 0;
 }
+Node::Node(int n)
+{
+	SetName(n);
+}
 Node* Node::ArrayOfJoints(vector<Node*>Num)
 {
 	for (int i = 0; i <= Node::NodeCount; i++)

@@ -13,6 +13,7 @@ class Node
 	std::set <int> connection;
 public:
 	Node(void);
+	Node(int);
 	~Node(void);
 	bool IsJoint(Node*);
 	void SetName(int);

@@ -6,6 +6,20 @@ CircuitElement::CircuitElement(void)
 	Current = 0;
 	Voltage = 0;
 }
+CircuitElement::CircuitElement(string EleName, Node* n1, Node* n2)
+{
+	TempCounter++;
+	Setid(TempCounter);
+	Current = 0;
+	Voltage = 0;
+	SetNode1(n1);
+	SetNode2(n2);
+	SetElementName(EleName);
+	n1->Connect(n2->GetName());
+	n1->IncrementFrequency();
+	n2->Connect(n1->GetName());
+	n2->IncrementFrequency();
+}
 void CircuitElement::SetNode1(Node* n)
 {
 	Node1 = n;

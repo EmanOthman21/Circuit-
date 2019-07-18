@@ -11,7 +11,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 	if (FileInput.is_open())
 	{
 		// temoporary variables to read the input from the file
-		std::string elename;
+		std::string EleName;
 		float val;
 		while (true)
 		{
@@ -20,30 +20,30 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 				FileInput.close();
 				break;
 			}
-			FileInput >> elename;
-			if(elename.length() == 1 )
+			FileInput >> EleName;
+			if(EleName.length() == 1 )
 			{
-				CircuitElement::OutMethod = elename;
+				CircuitElement::OutMethod = EleName;
 			}
 
-			if ((toupper(elename[0]) == 'C' && toupper(elename[2]) == 'C') || (toupper(elename[0]) == 'C' && toupper(elename[2]) == 'V') || (toupper(elename[0]) == 'V' && toupper(elename[2]) == 'V') || (toupper(elename[0]) == 'V' && toupper(elename[2]) == 'C'))
+			if ((toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'C') || (toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'C'))
 			{
-				Read_Dependant(elename, Factor[CircuitElement::NumDep], Nodes, Element, TempCounter);
+				Read_Dependant(EleName, Factor[CircuitElement::NumDep], Nodes, Element, TempCounter);
 				CircuitElement::NumDep++;
 				continue;
 			}
-			if (elename[0] == 'w' || elename[0] == 'W')
+			if (EleName[0] == 'w' || EleName[0] == 'W')
 			{
 				FileInput >> val;
 				CircuitElement::W = val;
 			}
-			else if (elename[0] == 'V' || elename[0] == 'v' || (elename[0] == 'I' || elename[0] == 'i'))
+			else if (EleName[0] == 'V' || EleName[0] == 'v' || (EleName[0] == 'I' || EleName[0] == 'i'))
 			{
-				Read_Voltage_Source_Current_Source(vsindex, csindex, elename, Nodes, Element, TempCounter, VS, CS, VSV);
+				Read_Voltage_Source_Current_Source(vsindex, csindex, EleName, Nodes, Element, TempCounter, VS, CS, VSV);
 			}
 			else
 			{
-				Read_Resistor_Capacitor_Inductor(elename, Nodes, Element, TempCounter);
+				Read_Resistor_Capacitor_Inductor(EleName, Nodes, Element, TempCounter);
 			}
 		}
 
@@ -57,36 +57,28 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 }
 
 
-void Input::Read_Dependant(const string elename,complex<float>& Factor, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter)
+void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter)
 {
 	int n1 , n2 , M , N, re, ima;
 	FileInput >> n1 >> n2 >> re >> ima>> M >> N;
 	Factor= complex<float> (re,ima);
 	if (!Nodes[n1])
-		Nodes[n1] = new Node;
+		Nodes[n1] = new Node(n1);
 	if (!Nodes[n2])
-		Nodes[n2] = new Node;
-	Nodes[n1]->SetName(n1);
-	Nodes[n2]->SetName(n2);
-	Nodes[M]->SetName(M);
-	Nodes[N]->SetName(N);
-	CircuitElement* temppointer = new CircuitElement;
-	temppointer->Setid(CircuitElement::TempCounter);
-	temppointer->SetElementName(elename);
-	temppointer->SetNode1(Nodes[n1]);
-	temppointer->GetNode1()->Connect(n2);
-	temppointer->GetNode1()->IncrementFrequency();
-	temppointer->SetNode2(Nodes[n2]);
-	temppointer->GetNode2()->Connect(n1);
-	temppointer->GetNode2()->IncrementFrequency();
-	temppointer->SetNode3(Nodes[M]);
-	temppointer->SetNode4(Nodes[N]);
-	temppointer->SetFactor(Factor);
-	Element.push_back(temppointer);
+		Nodes[n2] = new Node(n2);
+	if (!Nodes[M])
+		Nodes[M] = new Node(M);
+	if (!Nodes[N])
+		Nodes[N] = new Node(N);
+	CircuitElement* TempElem = new CircuitElement(EleName, Nodes[n1], Nodes[n2]);
+	TempElem->SetNode3(Nodes[M]);
+	TempElem->SetNode4(Nodes[N]);
+	TempElem->SetFactor(Factor);
+	Element.push_back(TempElem);
 
 }
 
-void Input::Read_Voltage_Source_Current_Source( int& vsindex , int& csindex ,const string elename, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>*>&VSV)
+void Input::Read_Voltage_Source_Current_Source( int& vsindex , int& csindex ,const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>*>&VSV)
 {
 
 	int n1 , n2 , M ,val,Phase;
@@ -97,35 +89,27 @@ void Input::Read_Voltage_Source_Current_Source( int& vsindex , int& csindex ,con
 		Nodes[n2] = new Node;
 	Nodes[n1]->SetName(n1);
 	Nodes[n2]->SetName(n2);
-	CircuitElement* temppointer = new CircuitElement;
-	temppointer->Setid(CircuitElement::TempCounter);
-	temppointer->SetElementName(elename);
-	temppointer->SetNode1(Nodes[n1]);
-	temppointer->GetNode1()->Connect(n2);
-	temppointer->GetNode1()->IncrementFrequency();
-	temppointer->SetNode2(Nodes[n2]);
-	temppointer->GetNode2()->Connect(n1);
-	temppointer->GetNode2()->IncrementFrequency();
-	temppointer->SetValueOfVoltageandCurrent(val,Phase);
+	CircuitElement* TempElem = new CircuitElement(EleName, Nodes[n1], Nodes[n2]);
+	TempElem->SetValueOfVoltageandCurrent(val,Phase);
 	//to store the voltage sources in an array of elements
-	if(temppointer->IsVoltageSource())
+	if(TempElem->IsVoltageSource())
 	{
-		VS[vsindex]= temppointer;
+		VS[vsindex]= TempElem;
 		VSV[vsindex] = new complex<float>;
 		*VSV[vsindex]=VS[vsindex]->GetValue();
 		vsindex++;
 	}
-	if(temppointer->IsCurrentSource())
+	if(TempElem->IsCurrentSource())
 	{
-		CS[csindex]=temppointer;
+		CS[csindex]=TempElem;
 		csindex++;
 	}
 	Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
 	Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 
-	Element.push_back(temppointer);
+	Element.push_back(TempElem);
 }
 
-void Input::Read_Resistor_Capacitor_Inductor(const string elename, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter)
+void Input::Read_Resistor_Capacitor_Inductor(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter)
 {
 	int n1,n2,val;
 		FileInput >> n1 >> n2 >> val;
@@ -135,19 +119,11 @@ void Input::Read_Resistor_Capacitor_Inductor(const string elename, vector<Node*>
 			Nodes[n2] = new Node;
 		Nodes[n1]->SetName(n1);
 		Nodes[n2]->SetName(n2);
-		CircuitElement* temppointer = new CircuitElement;
-		temppointer->Setid(CircuitElement::TempCounter);
-		temppointer->SetElementName(elename);
-		temppointer->SetNode1(Nodes[n1]);
-		temppointer->GetNode1()->Connect(n2);
-		temppointer->GetNode1()->IncrementFrequency();
-		temppointer->SetNode2(Nodes[n2]);
-		temppointer->GetNode2()->Connect(n1);
-		temppointer->GetNode2()->IncrementFrequency();
-		temppointer->SetValue(val);
+		CircuitElement* TempElem = new CircuitElement(EleName, Nodes[n1], Nodes[n2]);
+		TempElem->SetValue(val);
 		Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
 		Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 
-		Element.push_back(temppointer);
+		Element.push_back(TempElem);
 
 }
 
