@@ -724,17 +724,17 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
 		if(Element[i]->IsDepSource())
 		{
 			ElementName = Element[i]->GetElementName();
-			if((ElementName[0]=='v' || ElementName[0] == 'V') && (ElementName[2] == 'C' || ElementName[2] == 'c'))
+			if((toupper(ElementName[0]) =='V') && (toupper(ElementName[2]) == 'C'))
 			{
 				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()] - Nodes[Element[i]->GetNode2()->GetName()]);
 				flag--;
 			}
-			if((ElementName[0] == 'v' || ElementName[0] == 'V') && (ElementName[2] == 'V' || ElementName[2] == 'v'))
+			if((toupper(ElementName[0] == 'V')) && (toupper(ElementName[2]) == 'V'))
 			{
 				Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()] - Nodes[Element[i]->GetNode2()->GetName()]);
 				flag--;
 			}
-			if((ElementName[0] == 'C' || ElementName[0] == 'C') && (ElementName[2] == 'C' || ElementName[2] == 'c'))
+			if((toupper(ElementName[0]) == 'C') && (toupper(ElementName[2]) == 'C' ))
 			{
 				N3=Element[i]->GetNode3()->GetName();
 				N4=Element[i]->GetNode4()->GetName();
@@ -756,7 +756,7 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
 				}
 				flag--;
 			}
-			if((ElementName[0] == 'C' || ElementName[0] == 'C') && (ElementName[2] == 'V' || ElementName[2] == 'V'))
+			if((toupper(ElementName[0]) == 'C') && (toupper(ElementName[2]) == 'V'))
 			{
 				N1=Element[i]->GetNode1()->GetName();
 				N2=Element[i]->GetNode2()->GetName();

@@ -2,7 +2,6 @@
 #include <vector>
 #include <cmath>
 #include"MatrixFill.h"
-#include <direct.h>
 #define MaxElements 1000
 int CircuitElement::id = 0;
 float CircuitElement::W = 0;
@@ -34,25 +33,7 @@ int main()
 	vector<CircuitElement*> CS;
 	//array of voltage sources values
 	vector<complex<float>> VSV;
-
-	cout << "You have existing input circuits in input circuit folder:\n\n";
-	DIR* dir;
-	struct dirent* ent;
-	if ((dir = opendir("../Input Circuits/")) != NULL) {
-		/* print all the files and directories within directory */
-		while ((ent = readdir(dir)) != NULL) {
-			if(ent->d_name[0] != '.')
-				printf("%s\n", ent->d_name);
-		}
-		closedir(dir);
-	}
-	else {
-		/* could not open directory */
-		perror("");
-		return EXIT_FAILURE;
-	}
-
-	cout << "\n\nPlease, write the input file name : ";
+	cout << "Please, write the input file name : ";
 	std::getline(std::cin, FileName);
 	Input In(FileName + ".txt", Nodes, Element, CircuitElement::TempCounter, VS, CS, VSV);
 	MatrixFill M(Nodes,Element,VS,VSV);
@@ -64,8 +45,7 @@ int main()
 
 	ofstream FileOutput;
 	FileOutput.open("../Circuit Solutions/" + FileName + " Solution.txt");
-	string cartzian = "Cartesian";
-	if(cartzian.compare(In.OutMethod))
+	if(toupper(In.OutMethod[0]) == 'C')
 	{
 		for (int i=1;i<=Node::NodeCount;i++)
 		{
@@ -80,11 +60,11 @@ int main()
 	{
 		for (int i=1;i<=Node::NodeCount;i++)
 		{
-			FileOutput << "V("<< i<< ")   "<< sqrt(Nodes[i]->GetVoltage().real() * Nodes[i]->GetVoltage().real() + Nodes[i]->GetVoltage().imag() * Nodes[i]->GetVoltage().imag()) << '<' << atan2(Nodes[i]->GetVoltage().imag(),Nodes[i]->GetVoltage().real()) << std::endl;
+			FileOutput << "V("<< i<< ")   "<< sqrt(Nodes[i]->GetVoltage().real() * Nodes[i]->GetVoltage().real() + Nodes[i]->GetVoltage().imag() * Nodes[i]->GetVoltage().imag()) << '<' << atan2(Nodes[i]->GetVoltage().imag(),Nodes[i]->GetVoltage().real()) * 180 / pi << std::endl;
 		}
 		for (int i=0;i<CircuitElement::TempCounter;i++)
 		{
-			FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< sqrt(Element[i]->GetCurrent().real() * Element[i]->GetCurrent().real() + Element[i]->GetCurrent().imag() * Element[i]->GetCurrent().imag()) << atan2(Element[i]->GetCurrent().imag(),Element[i]->GetCurrent().real()) << std::endl;
+			FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< sqrt(Element[i]->GetCurrent().real() * Element[i]->GetCurrent().real() + Element[i]->GetCurrent().imag() * Element[i]->GetCurrent().imag()) << '<' << atan2(Element[i]->GetCurrent().imag(),Element[i]->GetCurrent().real()) * 180 / pi << std::endl;
 		}
 	}
 }

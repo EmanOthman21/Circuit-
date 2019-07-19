@@ -20,9 +20,10 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 				break;
 			}
 			FileInput >> EleName;
-			if(EleName.length() == 1 )
+			if(EleName.length() > 4 )
 			{
 				OutMethod = EleName;
+				continue;
 			}
 
 			if ((toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'C') || (toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'C'))
