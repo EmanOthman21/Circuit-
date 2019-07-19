@@ -521,7 +521,7 @@ void MatrixFill::CreateMatE(MatrixXcd& E, vector<complex<float>>& VSV)
 	
 	for(int i=0;i<CircuitElement::VoltageCounter;i++)
 	{
-		E(i, 0) = VSV[i];
+		E(i, 0) = VSV[i + 1];
 	}
 
 }

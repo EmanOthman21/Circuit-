@@ -4,6 +4,12 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 {
 	OutMethod = "Phase";
 	FileName = S;
+	// the next five lines are useless for now
+	complex<float> t;
+	CircuitElement* T;
+	VSV.push_back(t);
+	VS.push_back(T);
+	CS.push_back(T);
 	// some variables for the dependant sources
 	complex<float>Factor[100];
 	FileInput.open("../Input Circuits/" + FileName);
