@@ -6,6 +6,7 @@
 #include <cmath>
 #include <vector>
 using namespace std;
+#define pi 3.1415926535897931
 class CircuitElement
 {
 	Node *Node1, *Node2, *Node3, *Node4;
@@ -15,7 +16,6 @@ class CircuitElement
 	complex <float> Voltage;
 	complex <float> FactorValue;
 public:
-	static string OutMethod;
 	static float W;
 	static int VoltageCounter;
 	static int ResistanceCounter;

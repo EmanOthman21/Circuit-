@@ -1,14 +1,13 @@
 ﻿#include <complex>
 #include <vector>
 #include <cmath>
-#include <dirent.h>
 #include"MatrixFill.h"
+#include <direct.h>
 #define MaxElements 1000
 int CircuitElement::id = 0;
 float CircuitElement::W = 0;
 int CircuitElement::TempCounter = 0;
 int CircuitElement::NumDep = 0;
-string CircuitElement::OutMethod = "";
 //The total number of nodes	in the entered circuit 
 int Node::NodeCount = 0;
 int Node::JointNum = 0;
@@ -65,15 +64,29 @@ int main()
 
 	ofstream FileOutput;
 	FileOutput.open("../Circuit Solutions/" + FileName + " Solution.txt");
-	for (int i=1;i<=Node::NodeCount;i++)
+	string cartzian = "Cartesian";
+	if(cartzian.compare(In.OutMethod))
 	{
-		FileOutput << "V("<< i<< ")   "<<Nodes[i]->GetVoltage() << std::endl;
+		for (int i=1;i<=Node::NodeCount;i++)
+		{
+			FileOutput << "V("<< i<< ")   "<<Nodes[i]->GetVoltage() << std::endl;
+		}
+		for (int i=0;i<CircuitElement::TempCounter;i++)
+		{
+			FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<<Element[i]->GetCurrent()<< std::endl;
+		}
 	}
-	for (int i=0;i<CircuitElement::TempCounter;i++)
+	else
 	{
-		FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<<Element[i]->GetCurrent()<< std::endl;
+		for (int i=1;i<=Node::NodeCount;i++)
+		{
+			FileOutput << "V("<< i<< ")   "<< sqrt(Nodes[i]->GetVoltage().real() * Nodes[i]->GetVoltage().real() + Nodes[i]->GetVoltage().imag() * Nodes[i]->GetVoltage().imag()) << '<' << atan2(Nodes[i]->GetVoltage().imag(),Nodes[i]->GetVoltage().real()) << std::endl;
+		}
+		for (int i=0;i<CircuitElement::TempCounter;i++)
+		{
+			FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< sqrt(Element[i]->GetCurrent().real() * Element[i]->GetCurrent().real() + Element[i]->GetCurrent().imag() * Element[i]->GetCurrent().imag()) << atan2(Element[i]->GetCurrent().imag(),Element[i]->GetCurrent().real()) << std::endl;
+		}
 	}
-	
 }
 
 	

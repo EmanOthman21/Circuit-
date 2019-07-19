@@ -2,6 +2,7 @@
 
 Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter, vector<CircuitElement*>& VS, vector<CircuitElement*>& CS, vector<complex<float>>& VSV)
 {
+	OutMethod = "Phase";
 	FileName = S;
 	// some variables for the dependant sources
 	complex<float>Factor[100];
@@ -21,7 +22,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 			FileInput >> EleName;
 			if(EleName.length() == 1 )
 			{
-				CircuitElement::OutMethod = EleName;
+				OutMethod = EleName;
 			}
 
 			if ((toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'C') || (toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'C'))
@@ -51,7 +52,6 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 		std::cout << "cannot open the file\nPlease, check the name of the file is written correctly\n\n";
 		exit(-1);
 	}
-
 }
 
 

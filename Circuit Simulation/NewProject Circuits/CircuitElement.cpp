@@ -62,7 +62,7 @@ void CircuitElement::SetValue(float val)
 void CircuitElement::SetValueOfVoltageandCurrent (float val,float Phase)
 { 
 	 
-	Value=complex<float> (val*(cos((Phase*3.1415926535897931/180))-cos(acos(0))),val*(sin((Phase*3.1415926535897931/180))-cos(acos(0))));
+	Value=complex<float> (val*(cos((Phase*pi/180))-cos(acos(0))),val*(sin((Phase*pi/180))-cos(acos(0))));
 }
 
 
