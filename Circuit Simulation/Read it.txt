@@ -1,0 +1,3 @@
+1 - see if elements between nodes can be transformed into vector instead of array
+done but i didn't complie because of the diractory , it give me 7 errors and didn't recognize the libarary
+if there is any errors from the vector of pointer tell me

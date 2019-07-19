@@ -1,1 +1,0 @@
-1 - see if elements between nodes can be transformed into vector instead of array

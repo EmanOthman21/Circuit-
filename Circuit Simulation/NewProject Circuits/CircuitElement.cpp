@@ -199,24 +199,22 @@ complex<float> CircuitElement::GetVoltage() const
 	return Voltage;
 }
 
-CircuitElement** CircuitElement::ElementBetweenNodes(int n1, int n2, int& NumOfElemBetweenNodes, vector<CircuitElement*> Element)
+vector<CircuitElement*> CircuitElement::ElementBetweenNodes(int n1, int n2, int& NumOfElemBetweenNodes, vector<CircuitElement*> Element)
 {	
 	NumOfElemBetweenNodes = 0;
-	int node1=0;
-	int node2=0;
-	CircuitElement **parallelresistances = new CircuitElement*[CircuitElement::id];
+	int node1 = 0;
+	int node2 = 0;
+	vector<CircuitElement*> parallelresistances;
 	for (int i = 0; i < CircuitElement::id; i++)
 	{
 		node1=Element[i]->GetNode1()->GetName();
 		node2=Element[i]->GetNode2()->GetName();
 		if( (node1== n1 && node2 == n2) || (node1 == n2 && node2 == n1))
 		{ 
-			parallelresistances[NumOfElemBetweenNodes] = Element[i];
+			parallelresistances.push_back(Element[i]);
 			NumOfElemBetweenNodes++;
 		}
-
 	}
-	
 	return parallelresistances;
 }
 

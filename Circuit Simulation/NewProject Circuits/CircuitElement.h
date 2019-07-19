@@ -53,7 +53,7 @@ public:
 	complex<float> GetCurrent() const;
 	complex<float> GetVoltage() const;
 	std::string GetElementName() const;
-	CircuitElement** ElementBetweenNodes(int , int, int& NumOfElemBetweenNodes, vector<CircuitElement*>);
+	vector<CircuitElement*> ElementBetweenNodes(int , int, int& NumOfElemBetweenNodes, vector<CircuitElement*>);
 	CircuitElement(string EleName, Node* n1, Node* n2);
 	CircuitElement(void);
 	~CircuitElement(void);
