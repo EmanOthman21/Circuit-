@@ -64,8 +64,12 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 
 void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter)
 {
-	int n1 , n2 , M , N, re, ima;
-	FileInput >> n1 >> n2 >> re >> ima>> M >> N;
+	int n1 , n2 , M , N;
+	double re, ima;
+	string real , imag;
+	FileInput >> n1 >> n2 >> real >> imag>> M >> N;
+	re  =  stod(real);
+	ima =  stod(imag);
 	Factor= complex<float> (re,ima);
 	if (!Nodes[n1])
 		Nodes[n1] = new Node(n1);
@@ -86,8 +90,12 @@ void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<N
 void Input::Read_Voltage_Source_Current_Source(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>>&VSV)
 {
 
-	int n1 , n2 , M ,val,Phase;
-	FileInput >> n1 >> n2 >> val>> Phase;
+	int n1 , n2 , M ;
+	double val, Phase;
+	string va , Ph;
+	FileInput >> n1 >> n2 >> va>> Ph;
+	val = stod(va);
+	Phase = stod(Ph);
 	if (!Nodes[n1])
 		Nodes[n1] = new Node;
 	if (!Nodes[n2])
@@ -113,20 +121,22 @@ void Input::Read_Voltage_Source_Current_Source(const string EleName, vector<Node
 
 void Input::Read_Resistor_Capacitor_Inductor(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter)
 {
-	int n1,n2,val;
-		FileInput >> n1 >> n2 >> val;
-		if (!Nodes[n1])
-			Nodes[n1] = new Node;
-		if (!Nodes[n2])
-			Nodes[n2] = new Node;
-		Nodes[n1]->SetName(n1);
-		Nodes[n2]->SetName(n2);
-		CircuitElement* TempElem = new CircuitElement(EleName, Nodes[n1], Nodes[n2]);
-		TempElem->SetValue(val);
-		Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
-		Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 
-		Element.push_back(TempElem);
-
+	int n1, n2;
+	double val;
+	string va ;
+	FileInput >> n1 >> n2 >> va;
+	val = stod(va);
+	if (!Nodes[n1])
+		Nodes[n1] = new Node;
+	if (!Nodes[n2])
+		Nodes[n2] = new Node;
+	Nodes[n1]->SetName(n1);
+	Nodes[n2]->SetName(n2);
+	CircuitElement* TempElem = new CircuitElement(EleName, Nodes[n1], Nodes[n2]);
+	TempElem->SetValue(val);
+	Node::NodeCount = (Node::NodeCount < n1 )? n1 : Node::NodeCount;  
+	Node::NodeCount = (Node::NodeCount < n2 )? n2 : Node::NodeCount; 
+	Element.push_back(TempElem);
 }
 
 

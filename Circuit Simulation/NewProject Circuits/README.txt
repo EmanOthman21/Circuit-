@@ -39,18 +39,25 @@ VCCS node1 node2 coefficient(real factor) coefficient(complex factor) node3 node
 when node3 is the first node of the controlled voltage
 node4 is the second node of the controlled  voltage
 
-VCCS 1 2 2 4 5
-VCVS 1 2 2 4 5
-CCCS 1 2 2 4 5
-CCVS 1 2 2 4 5
+VCCS 1 2 2 0 4 5
+VCVS 1 2 2 0 4 5
+CCCS 1 2 2 0 4 5
+CCVS 1 2 2 0 4 5
 
+-Method of printing 
+1-Cartzian
+2-Phase
+put the word "Cartzian " or "Phase in any line in the input file
+
+-defult is Phase
 
 -The results of the nodes voltage and the current will be printed at form of :
 V1 (x,y)
-when V1=x+yi 
+when V1 = x+yi 
+or V1 = Vlaue<Phase
 I(0,1) (x,y)
 when I(0,1)=x+yi
-
+or I1 = Vlaue<Phase
 -The currents will be printed in the same order we wrote in
 
 Ex :
@@ -58,7 +65,7 @@ Ex :
 R1 0 1 5
 R2 2 3 4
 "Outputs"
-I1(0,1) (x1,y1)
+I1(0,1) (x1,y1) or sqrt(x1^2 + x2^2) < atan(y1/x1)
 I2(2,3) (x2,y2) 
 
 -The order of R &C&L&V&I dosen't matter.
