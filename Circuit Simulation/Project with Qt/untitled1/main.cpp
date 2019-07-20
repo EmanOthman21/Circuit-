@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         vector<Node*> Nodes;
         Nodes.resize(MaxElements);
         // to store the joints in an array of nodesir
-        //Node* Joints;
+        Node* Joints;
         //array of voltage sources
         vector<CircuitElement*> VS;
         //array of Current sources
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         //array of voltage sources values
         vector<complex<float>> VSV;
         cout << "Please, write the input file name : ";
-        /*std::getline(std::cin, FileName);
+        std::getline(std::cin, FileName);
         Input In(FileName + ".txt", Nodes, Element, CircuitElement::TempCounter, VS, CS, VSV);
         MatrixFill M(Nodes,Element,VS,VSV);
         M.SetOut(Nodes,Element);
@@ -74,6 +74,5 @@ int main(int argc, char *argv[])
                 FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< sqrt(Element[i]->GetCurrent().real() * Element[i]->GetCurrent().real() + Element[i]->GetCurrent().imag() * Element[i]->GetCurrent().imag()) << '<' << atan2(Element[i]->GetCurrent().imag(),Element[i]->GetCurrent().real()) * 180 / pi << std::endl;
             }
         }
-*/
     return a.exec();
 }

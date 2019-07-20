@@ -146,7 +146,7 @@ bool CircuitElement::IsResistance ()
 
 bool CircuitElement::IsVoltageSource ()
 {
-    if(toupper(ElementName[0]) == 'V' && toupper(ElementName[1]!='C'))
+    if(toupper(ElementName[0]) == 'V' && !IsDepSource())
         return true;
     return false;
 }

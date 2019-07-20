@@ -4,7 +4,6 @@
 #include "CircuitElement.h"
 #include <fstream>
 #include "Node.h"
-#include <sstream>
 class Input
 {
 	string FileName;

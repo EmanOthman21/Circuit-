@@ -25,7 +25,6 @@ MatrixFill::MatrixFill(vector<Node*>Nodes, vector<CircuitElement*>Element, vecto
     A = A1;
     CreateMatA(G, B, C, D);
     CheakDep(Nodes, Element);
-
 }
 void MatrixFill::CheakDep(vector<Node*>&Nodes, vector<CircuitElement*>&Element)
 {
@@ -160,7 +159,7 @@ void MatrixFill::VCVS(vector<Node*>&Nodes, vector<CircuitElement*>&Element, int 
 }
     AMatrixSize++;
 }
-void MatrixFill::VCCS(vector<Node*> &Nodes,vector<CircuitElement*>& Element,int i)
+void MatrixFill::CCVS(vector<Node*> &Nodes,vector<CircuitElement*>& Element,int i)
 {
     MatrixXcd A2(AMatrixSize+1, AMatrixSize+1);
     CreateMat(A2, AMatrixSize+1, AMatrixSize+1);
@@ -290,7 +289,7 @@ void MatrixFill::VCCS(vector<Node*> &Nodes,vector<CircuitElement*>& Element,int 
 
 
 }
-void MatrixFill::CCVS(vector<Node*>&Nodes, vector<CircuitElement*>& Element,int i)
+void MatrixFill::VCCS(vector<Node*>&Nodes, vector<CircuitElement*>& Element,int i)
 {
     vector<CircuitElement*> Temp;
     int N1, N2, N3, N4, index = 0;
@@ -404,21 +403,21 @@ void MatrixFill::CCCS(vector<Node*>&Nodes, vector<CircuitElement*>& Element,int 
          else if(N2 == 0)
          {
              if(N4 == 0)
-                 A(N1-1,N3-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
+                 A(N1-1,N3-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
              else if(N3 == 0)
-                 A(N1-1,N4-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
+                 A(N1-1,N4-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
              else
              {
-                 A(N2-1,N3-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
-                 A(N2-1,N4-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
+                 A(N1-1,N3-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
+                 A(N1-1,N4-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
              }
          }
          else
          {
              A(N2-1,N4-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
              A(N2-1,N3-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
-             A(N1-1,N4-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
-             A(N1-1,N3-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
+             A(N1-1,N4-1) += Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
+             A(N1-1,N3-1) -= Element[i]->GetFactor() * complex<float>(1,0) / Temp[0]->GetValue();
          }
      }
      else if(Temp[0]->IsCurrentSource())
@@ -685,9 +684,9 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
     int F = CircuitElement::VoltageCounter + Node::NodeCount;
     for (int i = 0; i < CircuitElement::id; i++)
     {
-        if(Element[i]->IsDepSource() && (Element[i]->GetElementName()[0] == 'V' || Element[i]->GetElementName()[0] == 'v'))
+        if(Element[i]->IsDepSource() && (Element[i]->GetElementName()[2] == 'V' || Element[i]->GetElementName()[2] == 'v'))
         {
-            Element[i]->SetCurrent(-std::complex<float>(Output(F, 0)));
+            Element[i]->SetCurrent(std::complex<float>(-Output(F, 0)));
             F++;
         }
     }
@@ -724,7 +723,7 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
         if(Element[i]->IsDepSource())
         {
             ElementName = Element[i]->GetElementName();
-            if((toupper(ElementName[0]) =='V') && (toupper(ElementName[2]) == 'C'))
+            if((toupper(ElementName[0]) =='C') && (toupper(ElementName[2]) == 'V'))
             {
                 Element[i]->SetVoltage(Nodes[Element[i]->GetNode1()->GetName()] - Nodes[Element[i]->GetNode2()->GetName()]);
                 flag--;
@@ -756,7 +755,7 @@ void MatrixFill::SetOut(vector<Node*> Nodes,vector<CircuitElement*> Element)
                 }
                 flag--;
             }
-            if((toupper(ElementName[0]) == 'C') && (toupper(ElementName[2]) == 'V'))
+            if((toupper(ElementName[0]) == 'V') && (toupper(ElementName[2]) == 'C'))
             {
                 N1=Element[i]->GetNode1()->GetName();
                 N2=Element[i]->GetNode2()->GetName();

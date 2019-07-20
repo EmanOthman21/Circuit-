@@ -25,7 +25,6 @@ MatrixFill::MatrixFill(vector<Node*>Nodes, vector<CircuitElement*>Element, vecto
 	A = A1;
 	CreateMatA(G, B, C, D);
 	CheakDep(Nodes, Element);
-	
 }
 void MatrixFill::CheakDep(vector<Node*>&Nodes, vector<CircuitElement*>&Element)
 {
@@ -116,7 +115,7 @@ void MatrixFill::VCVS(vector<Node*>&Nodes, vector<CircuitElement*>&Element, int 
 			A(AMatrixSize, N1-1) -= complex<float>(1,0);
 		}
 	}
-	else if(!Temp[0]->IsDepSource())
+	else 
 	{
 		if(N1 == 0)
 		{
