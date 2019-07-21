@@ -1,6 +1,6 @@
 #include "Input.h"
 
-Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter, vector<CircuitElement*>& VS, vector<CircuitElement*>& CS, vector<complex<float>>& VSV)
+Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Element, vector<CircuitElement*>& VS, vector<CircuitElement*>& CS, vector<complex<float>>& VSV)
 {
     OutMethod = "Phase";
     FileName = S;
@@ -12,7 +12,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
     CS.push_back(T);
     // some variables for the dependant sources
     complex<float>Factor[100];
-    FileInput.open("../Input Circuits/" + FileName);
+    FileInput.open("Input Circuits/" + FileName);
     if (FileInput.is_open())
     {
         // temoporary variables to read the input from the file
@@ -34,7 +34,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 
             if ((toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'C') || (toupper(EleName[0]) == 'C' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'V') || (toupper(EleName[0]) == 'V' && toupper(EleName[2]) == 'C'))
             {
-                Read_Dependant(EleName, Factor[CircuitElement::NumDep], Nodes, Element, TempCounter);
+                Read_Dependant(EleName, Factor[CircuitElement::NumDep], Nodes, Element);
                 CircuitElement::NumDep++;
                 continue;
             }
@@ -45,11 +45,11 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
             }
             else if (EleName[0] == 'V' || EleName[0] == 'v' || (EleName[0] == 'I' || EleName[0] == 'i'))
             {
-                Read_Voltage_Source_Current_Source(EleName, Nodes, Element, TempCounter, VS, CS, VSV);
+                Read_Voltage_Source_Current_Source(EleName, Nodes, Element, VS, CS, VSV);
             }
             else
             {
-                Read_Resistor_Capacitor_Inductor(EleName, Nodes, Element, TempCounter);
+                Read_Resistor_Capacitor_Inductor(EleName, Nodes, Element);
             }
         }
 
@@ -62,7 +62,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 }
 
 
-void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<Node*>& Nodes, vector<CircuitElement*>& Element, int& TempCounter)
+void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<Node*>& Nodes, vector<CircuitElement*>& Element)
 {
     int n1 , n2 , M , N;
     double re, ima;
@@ -70,7 +70,7 @@ void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<N
     FileInput >> n1 >> n2 >> real >> imag>> M >> N;
     re  =  stod(real);
     ima =  stod(imag);
-    Factor= complex<float> (re,ima);
+    Factor= complex<double> (re,ima);
     if (!Nodes[n1])
         Nodes[n1] = new Node(n1);
     if (!Nodes[n2])
@@ -87,10 +87,10 @@ void Input::Read_Dependant(const string EleName,complex<float>& Factor, vector<N
 
 }
 
-void Input::Read_Voltage_Source_Current_Source(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>>&VSV)
+void Input::Read_Voltage_Source_Current_Source(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element, vector<CircuitElement*>&VS, vector<CircuitElement*>&CS, vector<complex<float>>&VSV)
 {
 
-    int n1 , n2 , M ;
+    int n1 , n2;
     double val, Phase;
     string va , Ph;
     FileInput >> n1 >> n2 >> va>> Ph;
@@ -119,7 +119,7 @@ void Input::Read_Voltage_Source_Current_Source(const string EleName, vector<Node
     Element.push_back(TempElem);
 }
 
-void Input::Read_Resistor_Capacitor_Inductor(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element,int &TempCounter)
+void Input::Read_Resistor_Capacitor_Inductor(const string EleName, vector<Node*>& Nodes, vector<CircuitElement*>& Element)
 {
     int n1, n2;
     double val;

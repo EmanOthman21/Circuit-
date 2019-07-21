@@ -3,9 +3,9 @@
 #include <vector>
 #include <cmath>
 #include <QApplication>
-#include <eigen/Eigen/Dense>
-#include <eigen/Eigen/Eigen>
+#include <Dense>
 #include <matrixfill.h>
+#include <dirent.h>
 int CircuitElement::id = 0;
 float CircuitElement::W = 0;
 int CircuitElement::TempCounter = 0;
@@ -24,55 +24,92 @@ int main(int argc, char *argv[])
     Eigen::MatrixXd n;
     QApplication a(argc, argv);
     MainWindow w;
-    w.show();
+    //w.show();
     // a parameter to take the input file and output file names
-        string FileName;
-        //array of the different elements of the circuit
-        vector<CircuitElement*> Element;
-        //array of Nodes
-        vector<Node*> Nodes;
-        Nodes.resize(MaxElements);
-        // to store the joints in an array of nodesir
-        Node* Joints;
-        //array of voltage sources
-        vector<CircuitElement*> VS;
-        //array of Current sources
-        vector<CircuitElement*> CS;
-        //array of voltage sources values
-        vector<complex<float>> VSV;
-        cout << "Please, write the input file name : ";
-        std::getline(std::cin, FileName);
-        Input In(FileName + ".txt", Nodes, Element, CircuitElement::TempCounter, VS, CS, VSV);
-        MatrixFill M(Nodes,Element,VS,VSV);
-        M.SetOut(Nodes,Element);
-        Joints = Nodes[0]->ArrayOfJoints(Nodes);
-        complex<float> *nodevoltage = new complex<float> [CircuitElement::id];
-        nodevoltage[0] = complex<float>(0,0);
+    string FileName;
+    //array of the different elements of the circuit
+    vector<CircuitElement*> Element;
+    //array of Nodes
+    vector<Node*> Nodes;
+    Nodes.resize(MaxElements);
+    // to store the joints in an array of nodesir
+    Node* Joints;
+    //array of voltage sources
+    vector<CircuitElement*> VS;
+    //array of Current sources
+    vector<CircuitElement*> CS;
+    //array of voltage sources values
+    vector<complex<float>> VSV;
+
+    DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir ("Input Circuits/")) != NULL)
+    {
+      cout << "Available circuit netlists in input circuits folder are:\n";
+      bool empty = true;
+      /* print all the files and directories within directory */
+      while ((ent = readdir (dir)) != NULL)
+      {
+          char* temp = ent->d_name;
+          if(temp[0] == '.')
+              continue;
+          while(*temp!='.')
+          {
+            printf("%c",*temp++);
+            empty = false;
+          }
+          cout<<endl;
+      }
+      closedir (dir);
+      if(empty)
+      {
+          cout << "No netlists Available at input circuits directory.\n please add a netlist then try again.\n\n";
+          return -2;
+      }
+    }
+    else
+    {
+      /* could not open directory */
+      perror ("");
+      return EXIT_FAILURE;
+    }
 
 
-        ofstream FileOutput;
-        FileOutput.open("../Circuit Solutions/" + FileName + " Solution.txt");
-        if(toupper(In.OutMethod[0]) == 'C')
+    cout << "\nPlease, write the input file name : ";
+    std::getline(std::cin, FileName);
+    Input In(FileName + ".txt", Nodes, Element, VS, CS, VSV);
+    MatrixFill M(Nodes,Element,VS,VSV);
+    M.SetOut(Nodes,Element);
+    Joints = Nodes[0]->ArrayOfJoints(Nodes);
+    complex<float> *nodevoltage = new complex<float> [CircuitElement::id];
+    nodevoltage[0] = complex<float>(0,0);
+
+
+    ofstream FileOutput;
+    FileOutput.open("Circuit Solutions/" + FileName + " Solution.txt");
+    if(toupper(In.OutMethod[0]) == 'C')
+    {
+        for (int i=1;i<=Node::NodeCount;i++)
         {
-            for (int i=1;i<=Node::NodeCount;i++)
-            {
-                FileOutput << "V("<< i<< ")   "<<Nodes[i]->GetVoltage() << std::endl;
-            }
-            for (int i=0;i<CircuitElement::TempCounter;i++)
-            {
-                FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<<Element[i]->GetCurrent()<< std::endl;
-            }
+            FileOutput << "V("<< i<< ")   "<<Nodes[i]->GetVoltage() << std::endl;
         }
-        else
+        for (int i=0;i<CircuitElement::TempCounter;i++)
         {
-            for (int i=1;i<=Node::NodeCount;i++)
-            {
-                FileOutput << "V("<< i<< ")   "<< sqrt(Nodes[i]->GetVoltage().real() * Nodes[i]->GetVoltage().real() + Nodes[i]->GetVoltage().imag() * Nodes[i]->GetVoltage().imag()) << '<' << atan2(Nodes[i]->GetVoltage().imag(),Nodes[i]->GetVoltage().real()) * 180 / pi << std::endl;
-            }
-            for (int i=0;i<CircuitElement::TempCounter;i++)
-            {
-                FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< sqrt(Element[i]->GetCurrent().real() * Element[i]->GetCurrent().real() + Element[i]->GetCurrent().imag() * Element[i]->GetCurrent().imag()) << '<' << atan2(Element[i]->GetCurrent().imag(),Element[i]->GetCurrent().real()) * 180 / pi << std::endl;
-            }
+            FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<<Element[i]->GetCurrent()<< std::endl;
         }
-    return a.exec();
+    }
+    else
+    {
+        for (int i=1;i<=Node::NodeCount;i++)
+        {
+            FileOutput << "V("<< i<< ")   "<< sqrt(Nodes[i]->GetVoltage().real() * Nodes[i]->GetVoltage().real() + Nodes[i]->GetVoltage().imag() * Nodes[i]->GetVoltage().imag()) << '<' << atan2(Nodes[i]->GetVoltage().imag(),Nodes[i]->GetVoltage().real()) * 180 / pi << std::endl;
+        }
+        for (int i=0;i<CircuitElement::TempCounter;i++)
+        {
+            FileOutput << "I("<< (Element[i]->GetNode1())->GetName()<<","<<(Element[i]->GetNode2())->GetName()<< ")   "<< sqrt(Element[i]->GetCurrent().real() * Element[i]->GetCurrent().real() + Element[i]->GetCurrent().imag() * Element[i]->GetCurrent().imag()) << '<' << atan2(Element[i]->GetCurrent().imag(),Element[i]->GetCurrent().real()) * 180 / pi << std::endl;
+        }
+    }
+    cout << "\nCircuit Solved successfully!, please check Circuit Solutions folder for the results.\n\n";
+    system("pause");
+    //return a.exec();
 }

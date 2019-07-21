@@ -8,7 +8,7 @@ QT       -= core gui
 TEMPLATE = app
 CONFIG += console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+RC_FILE = untitled1.rc
 TARGET = untitled1
 TEMPLATE = app
 
@@ -35,6 +35,7 @@ SOURCES += \
 
 HEADERS += \
         circuitelement.h \
+        dirent.h \
         input.h \
         mainwindow.h \
         matrixfill.h \
@@ -49,5 +50,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 INCLUDEPATH += ../eigen/Eigen
+
+DISTFILES +=
+
+RESOURCES +=
+
+
+
+
 
 

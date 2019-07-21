@@ -1,6 +1,6 @@
 #pragma once
-#include"Input.h"
-#include <eigen/Eigen/Dense>
+#include <input.h>
+#include <Dense>
 using Eigen::MatrixXd;
 using Eigen::MatrixXcd;
 class MatrixFill

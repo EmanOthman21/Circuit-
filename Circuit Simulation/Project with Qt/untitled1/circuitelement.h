@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include "Node.h"
+#include <node.h>
 #include <complex>
 #include <cmath>
 #include <vector>
-const long double pi = 3.1415926535897931;
+const double pi = 3.1415926535897931;
 using namespace std;
 class CircuitElement
 {
