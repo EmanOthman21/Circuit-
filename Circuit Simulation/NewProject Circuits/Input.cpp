@@ -12,7 +12,7 @@ Input::Input(const string S, vector<Node*>& Nodes, vector<CircuitElement*>& Elem
 	CS.push_back(T);
 	// some variables for the dependant sources
 	complex<float>Factor[100];
-	FileInput.open("../Input Circuits/" + FileName);
+	FileInput.open("Input Circuits/" + FileName);
 	if (FileInput.is_open())
 	{
 		// temoporary variables to read the input from the file

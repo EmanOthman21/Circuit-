@@ -44,7 +44,7 @@ int main()
 
 
 	ofstream FileOutput;
-	FileOutput.open("../Circuit Solutions/" + FileName + " Solution.txt");
+	FileOutput.open("Circuit Solutions/" + FileName + " Solution.txt");
 	if(toupper(In.OutMethod[0]) == 'C')
 	{
 		for (int i=1;i<=Node::NodeCount;i++)
